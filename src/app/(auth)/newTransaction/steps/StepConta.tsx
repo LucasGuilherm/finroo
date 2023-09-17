@@ -2,6 +2,8 @@
 
 import { useContext, useState } from "react";
 import { NewContext } from "../NewContext";
+import { Plus, PlusCircle } from "lucide-react";
+import Link from "next/link";
 
 const StepConta = () => {
   const { handleNext, handleFormInput } = useContext(NewContext);
@@ -22,18 +24,31 @@ const StepConta = () => {
   return (
     <>
       <h1 className="font-medium text-3xl">Qual conta deseja lançar?</h1>
-      {listaContas.map((conta) => {
-        return (
+      <div className="flex flex-col gap-4">
+        {listaContas.map((conta) => {
+          return (
+            <div
+              key={conta.id}
+              className="flex flex-row items-center gap-4"
+              onClick={() => handleInput(conta.id)}
+            >
+              <div className="bg-slate-200 rounded-full h-12 w-12"></div>
+              <span className="font-medium text-base">{conta.contaNome}</span>
+            </div>
+          );
+        })}
+        <Link href={"/newAccount"}>
           <div
-            key={conta.id}
-            className="flex flex-row items-center gap-4"
-            onClick={() => handleInput(conta.id)}
+            className="flex flex-row items-center gap-4 mt-4"
+            onClick={() => console.log("criar conta")}
           >
-            <div className="bg-slate-200 rounded-full h-12 w-12"></div>
-            <span className="font-medium text-base">{conta.contaNome}</span>
+            <div className="bg-slate-200 rounded-full w-12 h-12 flex">
+              <Plus className="m-auto" size={24}></Plus>
+            </div>
+            <span className="font-medium text-base">Nova conta</span>
           </div>
-        );
-      })}
+        </Link>
+      </div>
     </>
   );
 };

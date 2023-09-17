@@ -21,7 +21,7 @@ function Dashboard() {
           className="font-medium text-base flex-1 shadow rounded-[8px]"
         >
           <Link
-            href={"/newTransaction"}
+            href={{ pathname: "/newTransaction", query: { tipo: "Receita" } }}
             className="flex flex-row gap-3 justify-center items-center"
           >
             <ArrowDown size={20} weight="bold" />
@@ -34,7 +34,7 @@ function Dashboard() {
           className="font-medium text-base flex-1 shadow rounded-[8px]"
         >
           <Link
-            href={"/newTransaction"}
+            href={{ pathname: "/newTransaction", query: { tipo: "Despesa" } }}
             className="flex flex-row gap-3 justify-center items-center"
           >
             <ArrowUp size={20} weight="bold" />

@@ -1,12 +1,12 @@
 "use client";
 
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { NewContext } from "../NewContext";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
-const StepValor = () => {
+const StepSaldoInicial = () => {
   const { handleNext, handleFormInput } = useContext(NewContext);
   const [input, setInput] = useState<string>();
 
@@ -14,9 +14,11 @@ const StepValor = () => {
     let tempValue = input?.replace(/\D/g, "");
     tempValue = (Number(tempValue) / 100).toFixed(2) + "";
 
-    if (!Number(tempValue)) return;
+    if (!tempValue) {
+      tempValue = String(0);
+    }
 
-    handleFormInput({ chave: "valor", valor: tempValue });
+    handleFormInput({ chave: "saldoInicial", valor: tempValue });
 
     handleNext();
   };
@@ -38,8 +40,9 @@ const StepValor = () => {
 
   return (
     <>
-      <h1 className="font-medium text-3xl">Qual valor da despesa?</h1>
-      <span>Saldo disponível: R$ 4.000,00</span>
+      <h1 className="font-medium text-3xl">
+        Qual o saldo inicial dessa conta?
+      </h1>
       <div className="flex flex-row items-center border-b-2 gap-2">
         {/* <span className="text-4xl font-medium">R$</span> */}
         <Input
@@ -65,4 +68,4 @@ const StepValor = () => {
   );
 };
 
-export default StepValor;
+export default StepSaldoInicial;

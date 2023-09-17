@@ -1,6 +1,3 @@
-"use client";
-
-import { useSearchParams } from "next/navigation";
 import { ReactNode, createContext, useEffect, useState } from "react";
 
 interface ContextProps {
@@ -12,12 +9,11 @@ interface ContextProps {
 }
 
 type FormInputs = {
-  conta: string;
-  valor: number;
   descricao: string;
-  data: Date | null;
-  categoria: string;
-  tipo: string;
+  tipo: "Dinheiro" | "Crédito" | "Débito" | "Poupança" | "";
+  saldoInicial?: number;
+  vencimento?: number;
+  fechamento?: number;
 };
 
 export const NewContext = createContext<ContextProps>({
@@ -25,31 +21,14 @@ export const NewContext = createContext<ContextProps>({
   handleBack: () => {},
   handleFormInput: () => {},
   step: 1,
-  form: {
-    categoria: "",
-    conta: "",
-    data: null,
-    descricao: "",
-    valor: 0,
-    tipo: "",
-  },
+  form: { descricao: "", tipo: "" },
 });
 
 export const NewFormProvider = ({ children }: { children: ReactNode }) => {
-  const searchParams = useSearchParams();
-
-  const tipo = searchParams.get("tipo");
-
-  // Get the query parameter from the URL
-
   const [step, setStep] = useState(1);
   const [form, setForm] = useState<FormInputs>({
-    categoria: "",
-    conta: "",
-    data: null,
     descricao: "",
-    valor: 0,
-    tipo: tipo,
+    tipo: "",
   });
 
   const handleNext = () => {

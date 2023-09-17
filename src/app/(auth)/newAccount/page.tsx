@@ -1,32 +1,28 @@
 "use client";
 
-import { useContext } from "react";
-import { NewContext } from "./NewContext";
-import { FormHandle } from "./formHandle";
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { ChevronLeft, X } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { FormHandle } from "./formHandle";
 
-function NewTransaction() {
-  const { step, handleBack } = useContext(NewContext);
-
+function NewAccount() {
   const router = useRouter();
 
   const handleIconClick = () => {
-    if (step == 1 || step == 6) {
+    if (true) {
       router.back();
       return;
     }
 
-    handleBack();
+    // handleBack();
   };
 
   return (
     <>
       <div
         onClick={handleIconClick}
-        className="flex flex-row items-center gap-2 w-fit cursor-pointer"
+        className="flex flex-row items-center gap-2 w-fit"
       >
-        {step == 1 || step == 6 ? (
+        {true ? (
           <>
             <X size={28} />
             <span className="font-medium">fechar</span>
@@ -44,4 +40,4 @@ function NewTransaction() {
   );
 }
 
-export default NewTransaction;
+export default NewAccount;
