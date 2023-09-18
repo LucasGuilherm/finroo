@@ -17,7 +17,7 @@ type FormInputs = {
   descricao: string;
   data: Date | null;
   categoria: string;
-  tipo: string;
+  tipo: string | null;
 };
 
 export const NewContext = createContext<ContextProps>({
