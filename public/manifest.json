@@ -3,7 +3,7 @@
     "background_color": "#ffffff",
     "display": "fullscreen",
     "scope": "/",
-    "start_url": "/Dashboard",
+    "start_url": "/",
     "name": "Finroo - finance",
     "short_name": "Finroo ",
     "icons": [
