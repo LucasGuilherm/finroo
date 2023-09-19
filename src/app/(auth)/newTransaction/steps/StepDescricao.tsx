@@ -7,8 +7,11 @@ import { ChevronRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
 const StepDescricao = () => {
-  const { handleNext, handleFormInput } = useContext(NewContext);
+  const { handleNext, handleFormInput, form, corDestaque } =
+    useContext(NewContext);
   const inputRef = useRef<any>();
+
+  const { tipo } = form;
 
   const handleInput = () => {
     if (!inputRef.current.value) return;
@@ -20,7 +23,7 @@ const StepDescricao = () => {
 
   return (
     <>
-      <h1 className="font-medium text-3xl">Qual descrição da despesa?</h1>
+      <h1 className="font-medium text-3xl">Qual descrição da {tipo}?</h1>
       <Input
         ref={inputRef}
         placeholder="Descrição"
@@ -30,7 +33,7 @@ const StepDescricao = () => {
         <Button
           onClick={handleInput}
           className="rounded-full font-medium items-center text-lg px-5 py-6 gap-2"
-          variant={"despesa"}
+          variant={corDestaque}
         >
           Avançar
           <ChevronRight />

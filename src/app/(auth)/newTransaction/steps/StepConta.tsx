@@ -6,7 +6,9 @@ import { Plus, PlusCircle } from "lucide-react";
 import Link from "next/link";
 
 const StepConta = () => {
-  const { handleNext, handleFormInput } = useContext(NewContext);
+  const { handleNext, handleFormInput, form } = useContext(NewContext);
+
+  const { tipo } = form;
 
   const listaContas = [
     { id: 1, contaNome: "Dinheiro" },
@@ -23,7 +25,7 @@ const StepConta = () => {
 
   return (
     <>
-      <h1 className="font-medium text-3xl">Qual conta deseja lançar?</h1>
+      <h1 className="font-medium text-3xl">{`Qual conta deseja lançar a ${tipo.toLowerCase()}?`}</h1>
       <div className="flex flex-col gap-4">
         {listaContas.map((conta) => {
           return (

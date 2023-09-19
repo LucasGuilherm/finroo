@@ -3,9 +3,12 @@
 import { ChevronLeft, X } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { FormHandle } from "./formHandle";
+import { useContext } from "react";
+import { NewContext } from "./NewContext";
 
 function NewAccount() {
   const router = useRouter();
+  const { step } = useContext(NewContext);
 
   const handleIconClick = () => {
     if (true) {
@@ -22,7 +25,7 @@ function NewAccount() {
         onClick={handleIconClick}
         className="flex flex-row items-center gap-2 w-fit"
       >
-        {true ? (
+        {step == 1 || step == 4 ? (
           <>
             <X size={28} />
             <span className="font-medium">fechar</span>

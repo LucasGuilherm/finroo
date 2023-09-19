@@ -9,9 +9,11 @@ import { ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const SteData = () => {
-  const { handleNext } = useContext(NewContext);
+  const { handleNext, form, corDestaque } = useContext(NewContext);
   const [shortCut, setShortcut] = useState<"ontem" | "hoje" | "">("hoje");
   const inputRef = useRef<any>();
+
+  // const { tipo } = form;
 
   const setDate = (data: "ontem" | "hoje") => {
     inputRef.current.value =
@@ -34,7 +36,7 @@ const SteData = () => {
           onClick={() => setDate("ontem")}
           className={cn(
             `rounded-full flex-1 text-center p-2 font-medium cursor-pointer bg-slate-200 ${
-              shortCut == "ontem" && "bg-despesa"
+              shortCut == "ontem" && `bg-${corDestaque}`
             }`
           )}
         >
@@ -44,7 +46,7 @@ const SteData = () => {
           onClick={() => setDate("hoje")}
           className={cn(
             `rounded-full flex-1 text-center p-2 font-medium cursor-pointer bg-slate-200 ${
-              shortCut == "hoje" && "bg-despesa"
+              shortCut == "hoje" && `bg-${corDestaque}`
             }`
           )}
         >
@@ -62,7 +64,7 @@ const SteData = () => {
         <Button
           onClick={handleNext}
           className="rounded-full font-medium items-center text-lg px-5 py-6 gap-2"
-          variant={"despesa"}
+          variant={corDestaque}
         >
           Avançar
           <ChevronRight />

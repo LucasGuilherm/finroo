@@ -7,8 +7,11 @@ import { Check, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const StepCategoria = () => {
-  const { handleNext, handleFormInput } = useContext(NewContext);
+  const { handleNext, handleFormInput, form, corDestaque } =
+    useContext(NewContext);
   const [selected, setSelected] = useState<Number>();
+
+  const { tipo } = form;
 
   const categorias = [
     { id: 1, categoriaNome: "Mercado" },
@@ -33,7 +36,9 @@ const StepCategoria = () => {
 
   return (
     <>
-      <h1 className="font-medium text-3xl">Informe a categoria da despesa</h1>
+      <h1 className="font-medium text-3xl">
+        Informe a categoria da {tipo.toLowerCase()}
+      </h1>
 
       <div className="flex flex-col gap-4">
         {categorias.map((categoria) => {
@@ -46,19 +51,19 @@ const StepCategoria = () => {
               <div
                 className={cn(
                   `w-12 h-12 rounded-full bg-slate-200 ${
-                    selected == categoria.id && "bg-despesa"
+                    selected == categoria.id && `bg-${corDestaque}`
                   }`
                 )}
               ></div>
               <span
                 className={`text-base font-medium ${
-                  selected == categoria.id && "text-despesa"
+                  selected == categoria.id && `text-${corDestaque}`
                 }`}
               >
                 {categoria.categoriaNome}
               </span>
               {selected == categoria.id && (
-                <Check className="ml-auto stroke-despesa" />
+                <Check className={`ml-auto stroke-${corDestaque}`} />
               )}
             </div>
           );
@@ -69,7 +74,7 @@ const StepCategoria = () => {
         <Button
           onClick={handleInput}
           className="rounded-full font-medium items-center text-lg px-5 py-6 gap-2"
-          variant={"despesa"}
+          variant={corDestaque}
         >
           Finalizar lançamento
           <ChevronRight />

@@ -7,8 +7,11 @@ import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
 
 const StepValor = () => {
-  const { handleNext, handleFormInput } = useContext(NewContext);
+  const { handleNext, handleFormInput, corDestaque, form } =
+    useContext(NewContext);
   const [input, setInput] = useState<string>();
+
+  const { tipo } = form;
 
   const handleSubmitInput = () => {
     let tempValue = input?.replace(/\D/g, "");
@@ -38,14 +41,16 @@ const StepValor = () => {
 
   return (
     <>
-      <h1 className="font-medium text-3xl">Qual valor da despesa?</h1>
+      <h1 className="font-medium text-3xl">
+        Qual valor da {tipo.toLowerCase()}?
+      </h1>
       <span>Saldo disponível: R$ 4.000,00</span>
       <div className="flex flex-row items-center border-b-2 gap-2">
-        {/* <span className="text-4xl font-medium">R$</span> */}
         <Input
           type="string"
           inputMode="numeric"
           value={input}
+          defaultValue={""}
           onChange={(value) => handleInput(value.target.value)}
           className="border-0 font-medium text-4xl focus-visible:ring-0 focus-visible:ring-offset-0 px-0 my-2"
           placeholder="R$ 0,00"
@@ -54,8 +59,8 @@ const StepValor = () => {
       <div className="flex flex-row justify-end">
         <Button
           onClick={handleSubmitInput}
-          className="rounded-full font-medium items-center text-lg px-5 py-6 gap-2"
-          variant={"despesa"}
+          className={`rounded-full font-medium items-center text-lg px-5 py-6 gap-2`}
+          variant={corDestaque}
         >
           Avançar
           <ChevronRight />

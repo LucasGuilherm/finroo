@@ -8,14 +8,14 @@ import { Input } from "@/components/ui/input";
 
 const StepCredito = () => {
   const { handleNext, handleFormInput } = useContext(NewContext);
-  const refVencimento = useRef<any>();
-  const refFechamento = useRef<any>();
+  const refVencimento = useRef<HTMLInputElement>(null);
+  const refFechamento = useRef<HTMLInputElement>(null);
 
   const [message, setMessage] = useState<string>("");
 
   const handleInput = () => {
-    const diaVencimento = Number(refVencimento.current.value);
-    const diaFechamento = Number(refFechamento.current.value);
+    const diaVencimento = Number(refVencimento.current?.value);
+    const diaFechamento = Number(refFechamento.current?.value);
 
     if (!diaVencimento || !diaFechamento) return;
 
@@ -38,6 +38,19 @@ const StepCredito = () => {
     handleNext();
   };
 
+  const numberLimit = (ref: React.RefObject<HTMLInputElement>) => {
+    if (!ref.current) return;
+
+    const value = ref.current.value;
+    const input = ref.current;
+
+    input.value = value == "0" ? "" : String(value);
+
+    if (Number(value) > 31) {
+      input.value = value.slice(0, -1);
+    }
+  };
+
   return (
     <>
       <h1 className="font-medium text-3xl">
@@ -49,8 +62,9 @@ const StepCredito = () => {
           <span className="text-2xl font-medium">Fechamento</span>
           <Input
             ref={refFechamento}
+            onChange={() => numberLimit(refFechamento)}
             type="number"
-            placeholder="10"
+            placeholder="5"
             className="w-14 text-center border-0 border-b-2 font-medium text-3xl focus-visible:ring-0 focus-visible:ring-offset-0 px-0 my-6"
           />
         </div>
@@ -58,8 +72,9 @@ const StepCredito = () => {
           <span className="text-2xl font-medium">Vencimento</span>
           <Input
             ref={refVencimento}
+            onChange={() => numberLimit(refVencimento)}
             type="number"
-            placeholder="5"
+            placeholder="10"
             className="w-14 text-center border-0 border-b-2 font-medium text-3xl focus-visible:ring-0 focus-visible:ring-offset-0 px-0 my-6"
           />
         </div>

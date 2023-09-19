@@ -9,6 +9,7 @@ interface ContextProps {
   handleFormInput: ({ chave, valor }: { chave: string; valor: any }) => void;
   step: number;
   form: FormInputs;
+  corDestaque: "receita" | "despesa";
 }
 
 type FormInputs = {
@@ -17,7 +18,7 @@ type FormInputs = {
   descricao: string;
   data: Date | null;
   categoria: string;
-  tipo: string | null;
+  tipo: "Receita" | "Despesa";
 };
 
 export const NewContext = createContext<ContextProps>({
@@ -25,13 +26,14 @@ export const NewContext = createContext<ContextProps>({
   handleBack: () => {},
   handleFormInput: () => {},
   step: 1,
+  corDestaque: "despesa",
   form: {
     categoria: "",
     conta: "",
     data: null,
     descricao: "",
     valor: 0,
-    tipo: "",
+    tipo: "Despesa",
   },
 });
 
@@ -40,7 +42,9 @@ export const NewFormProvider = ({ children }: { children: ReactNode }) => {
 
   const tipo = searchParams.get("tipo");
 
-  // Get the query parameter from the URL
+  if (!(tipo == "Receita" || tipo == "Despesa")) return;
+
+  const corDestaque = tipo == "Receita" ? "receita" : "despesa";
 
   const [step, setStep] = useState(1);
   const [form, setForm] = useState<FormInputs>({
@@ -71,7 +75,14 @@ export const NewFormProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <NewContext.Provider
-      value={{ handleBack, handleNext, step, handleFormInput, form }}
+      value={{
+        handleBack,
+        handleNext,
+        step,
+        handleFormInput,
+        form,
+        corDestaque,
+      }}
     >
       {children}
     </NewContext.Provider>
