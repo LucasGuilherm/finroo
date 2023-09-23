@@ -1,5 +1,4 @@
 import NavHeader from "@/components/navHeader";
-import { ChevronLeft, CreditCard } from "lucide-react";
 
 type pageProps = {
   params: { account: string };

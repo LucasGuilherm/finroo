@@ -8,6 +8,9 @@ export default function Home() {
       <Link href={"/dashboard"}>
         <Button variant={"default"}>Dahsboard</Button>
       </Link>
+      <Link href={"/signIn"}>
+        <Button variant={"default"}>signin</Button>
+      </Link>
     </main>
   );
 }

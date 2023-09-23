@@ -1,0 +1,51 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  // shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+  relationMode = "prisma"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id       Int     @id @default(autoincrement())
+  email    String  @unique
+  username String?
+  password String
+}
+
+model Lancamentos {
+  id        Int      @id @default(autoincrement())
+  tipo      String
+  descricao String
+  valor     Decimal
+  data      DateTime @default(now())
+
+  // contaId Int
+  // conta   Contas? @relation(fields: [contaId], references: [id])
+
+  // categoriaId Int
+  // categoria   Categorias? @relation(fields: [categoriaId], references: [id])
+
+  // @@index([contaId])
+  // @@index([categoriaId])
+}
+
+model Contas {
+  id    Int    @id @default(autoincrement())
+  conta String
+
+  // lancamentos Lancamentos[]
+}
+
+model Categorias {
+  id        Int    @id @default(autoincrement())
+  categoria String
+
+  // lancamentos Lancamentos[]
+}

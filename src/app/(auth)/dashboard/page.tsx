@@ -1,12 +1,11 @@
 import { UserHeader } from "@/components";
-import { ArrowUp, ArrowDown } from "@/components/icons";
 import Link from "next/link";
 import ResumoTotal from "./resumoTotal";
 import { Separator } from "@/components/ui/separator";
 import { Bell } from "lucide-react";
 import BtnsNew from "./btnsNew";
 
-function Dashboard() {
+const Dashboard = async () => {
   return (
     <>
       <div className="flex flex-row justify-between items-center">
@@ -41,6 +40,6 @@ function Dashboard() {
       <Separator />
     </>
   );
-}
+};
 
 export default Dashboard;

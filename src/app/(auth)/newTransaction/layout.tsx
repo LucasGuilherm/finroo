@@ -1,5 +1,3 @@
-"use client";
-
 import { NewFormProvider } from "./NewContext";
 
 export default function RootLayout({

@@ -1,15 +1,16 @@
 import NavHeader from "@/components/navHeader";
-import { ChevronLeft, CreditCard } from "lucide-react";
+import { CreditCard } from "lucide-react";
 import Link from "next/link";
 
-const listaContas = [
-  { id: 1, nome: "Dinheiro" },
-  { id: 2, nome: "Inter Débito" },
-  { id: 3, nome: "Nubank Débito" },
-  { id: 4, nome: "Nubank Crédito" },
-];
+export type conta = {
+  id: number;
+  nome: string;
+};
 
-const Accounts = () => {
+const Accounts = async () => {
+  let data = await fetch("http://127.0.0.1:3000/api/contas");
+  const { listaContas }: { listaContas: conta[] } = await data.json();
+
   return (
     <>
       <NavHeader variant="close" />

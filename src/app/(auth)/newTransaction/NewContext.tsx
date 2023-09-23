@@ -12,7 +12,7 @@ interface ContextProps {
   corDestaque: "receita" | "despesa";
 }
 
-type FormInputs = {
+export type FormInputs = {
   conta: string;
   valor: number;
   descricao: string;
@@ -68,10 +68,6 @@ export const NewFormProvider = ({ children }: { children: ReactNode }) => {
 
     setForm((oldForm) => ({ ...oldForm, ...updatedValue }));
   };
-
-  useEffect(() => {
-    console.log(form);
-  }, [form]);
 
   return (
     <NewContext.Provider
