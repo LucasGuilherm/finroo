@@ -8,8 +8,8 @@ export type conta = {
 };
 
 const Accounts = async () => {
-  let data = await fetch("http://localhost:3000/api/contas");
-  // let data = await fetch("https://finroo.vercel.app/api/contas");
+  // let data = await fetch("http://localhost:3000/api/contas");
+  let data = await fetch("https://finroo.vercel.app/api/contas");
   const { listaContas }: { listaContas: conta[] } = await data.json();
 
   // console.log("server");
