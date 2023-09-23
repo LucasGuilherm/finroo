@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 export const POST = async (request: Request) => {
   const data: FormInputs = await request.json();
 
-  const lancamento = await createLancamento({ descricao: data.descricao });
+  const lancamento = await createLancamento(data);
 
   return NextResponse.json({ lancamento });
 };

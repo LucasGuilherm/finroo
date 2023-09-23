@@ -20,11 +20,10 @@ export const createLancamento = async ({
 }: {
   descricao: string;
 }) => {
-  const lancamento = await prisma.lancamentos.create({
-    data: {
-      descricao: "123123",
-    },
-  });
-
-  return lancamento;
+  // const lancamento = await prisma.lancamentos.create({
+  //   data: {
+  //     descricao: "123123",
+  //   },
+  // });
+  // return lancamento;
 };
