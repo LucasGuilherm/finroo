@@ -5,7 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import { Bell } from "lucide-react";
 import BtnsNew from "./btnsNew";
 
-const Dashboard = async () => {
+const Dashboard = () => {
   return (
     <>
       <div className="flex flex-row justify-between items-center">

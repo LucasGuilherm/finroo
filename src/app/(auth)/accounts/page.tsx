@@ -8,9 +8,12 @@ export type conta = {
 };
 
 const Accounts = async () => {
-  // let data = await fetch("http://127.0.0.1:3000/api/contas");
+  let data = await fetch("http://localhost:3000/api/contas");
   // let data = await fetch("https://finroo.vercel.app/api/contas");
-  // const { listaContas }: { listaContas: conta[] } = await data.json();
+  const { listaContas }: { listaContas: conta[] } = await data.json();
+
+  // console.log("server");
+  // console.log(listaContas);
 
   return (
     <>
@@ -18,7 +21,7 @@ const Accounts = async () => {
 
       <h1 className="text-2xl font-medium">Minhas contas</h1>
 
-      {/* <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4">
         {listaContas.map((conta) => {
           return (
             <Link
@@ -30,7 +33,7 @@ const Accounts = async () => {
             </Link>
           );
         })}
-      </div> */}
+      </div>
     </>
   );
 };
