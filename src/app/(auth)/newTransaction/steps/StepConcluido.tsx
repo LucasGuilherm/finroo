@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 const postLancamento = async (lancamento: FormInputs) => {
   // await new Promise((r) => setTimeout(r, 4000));
 
-  const data = await fetch("http://localhost:3000/api/lancamentos", {
+  const data = await fetch("https://finroo.vercel.app/api/lancamentos", {
     method: "POST",
     body: JSON.stringify(lancamento),
   });

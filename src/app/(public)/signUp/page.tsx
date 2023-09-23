@@ -23,7 +23,7 @@ type formType = {
 };
 
 const postNewAccount = async (accountInfo: formType) => {
-  const data = await fetch("http://localhost:3000/api/user", {
+  const data = await fetch("https://finroo.vercel.app/api/user", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

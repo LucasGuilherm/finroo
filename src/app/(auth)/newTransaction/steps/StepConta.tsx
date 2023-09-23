@@ -9,7 +9,7 @@ import { conta } from "../../accounts/page";
 import { useQuery } from "@tanstack/react-query";
 
 const getContas = async () => {
-  let data = await fetch("http://localhost:3000/api/contas");
+  let data = await fetch("https://finroo.vercel.app/api/contas");
   const { listaContas } = await data.json();
 
   return listaContas;
