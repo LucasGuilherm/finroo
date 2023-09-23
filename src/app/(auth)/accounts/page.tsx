@@ -18,7 +18,7 @@ const Accounts = async () => {
 
       <h1 className="text-2xl font-medium">Minhas contas</h1>
 
-      <div className="flex flex-col gap-4">
+      {/* <div className="flex flex-col gap-4">
         {listaContas.map((conta) => {
           return (
             <Link
@@ -30,7 +30,7 @@ const Accounts = async () => {
             </Link>
           );
         })}
-      </div>
+      </div> */}
     </>
   );
 };
