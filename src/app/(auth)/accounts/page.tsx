@@ -9,8 +9,8 @@ export type conta = {
 
 const Accounts = async () => {
   // let data = await fetch("http://127.0.0.1:3000/api/contas");
-  let data = await fetch("https://finroo.vercel.app/api/contas");
-  const { listaContas }: { listaContas: conta[] } = await data.json();
+  // let data = await fetch("https://finroo.vercel.app/api/contas");
+  // const { listaContas }: { listaContas: conta[] } = await data.json();
 
   return (
     <>
