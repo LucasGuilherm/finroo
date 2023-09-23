@@ -59,7 +59,7 @@ export const POST = async (resp: Request) => {
     );
   } catch (error) {
     return NextResponse.json(
-      { message: "Something went wrong, try again!" },
+      { message: `Something went wrong, try again! ${error}` },
       { status: 500 }
     );
   }
