@@ -1,4 +1,7 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
+import QueryProvider from "@/providers/queryProvider";
 import Link from "next/link";
 
 export default function Home() {

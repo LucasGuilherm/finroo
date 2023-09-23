@@ -1,12 +1,8 @@
-"use client";
-
-import { queryClient } from "@/lib/queryClient";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter, Work_Sans } from "next/font/google";
-import { QueryClientProvider } from "@tanstack/react-query";
+import QueryProvider from "@/providers/queryProvider";
 
-// const inter = Inter({ subsets: ["latin"] });
 const worksans = Work_Sans({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -23,10 +19,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <QueryClientProvider client={queryClient}>
+    <QueryProvider>
       <html lang="en">
         <body className={worksans.className}>{children}</body>
       </html>
-    </QueryClientProvider>
+    </QueryProvider>
   );
 }
