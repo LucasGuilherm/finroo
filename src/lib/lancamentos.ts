@@ -1,3 +1,4 @@
+import { FormInputs } from "@/app/(auth)/newTransaction/NewContext";
 import prisma from "./prisma";
 
 export const getLancamentos = async () => {
@@ -15,15 +16,15 @@ export const getLancamentos = async () => {
   }
 };
 
-export const createLancamento = async ({
-  descricao,
-}: {
-  descricao: string;
-}) => {
-  // const lancamento = await prisma.lancamentos.create({
-  //   data: {
-  //     descricao: "123123",
-  //   },
-  // });
-  // return lancamento;
+export const createLancamento = async (dados: FormInputs) => {
+  const { tipo, valor, descricao } = dados;
+
+  const lancamento = await prisma.lancamentos.create({
+    data: {
+      descricao,
+      tipo,
+      valor,
+    },
+  });
+  return lancamento;
 };

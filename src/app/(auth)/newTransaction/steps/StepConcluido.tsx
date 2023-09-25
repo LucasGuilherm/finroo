@@ -5,16 +5,17 @@ import { useContext, useEffect } from "react";
 import { FormInputs, NewContext } from "../NewContext";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
+import { fetchApi } from "@/lib/fetchWrap";
 
 const postLancamento = async (lancamento: FormInputs) => {
-  // await new Promise((r) => setTimeout(r, 4000));
-
-  const data = await fetch("https://finroo.vercel.app/api/lancamentos", {
+  const data = await fetchApi("/lancamentos", {
     method: "POST",
     body: JSON.stringify(lancamento),
   });
 
-  return await data.json();
+  console.log(data);
+
+  return data;
 };
 
 const StepConcluido = () => {
@@ -25,15 +26,13 @@ const StepConcluido = () => {
     mutationFn: () => postLancamento(form),
   });
 
+  if (mutation.isSuccess) {
+    router.replace("/dashboard");
+  }
+
   useEffect(() => {
     mutation.mutate();
   }, []);
-
-  if (mutation.isSuccess) {
-    console.log(mutation.data);
-
-    router.replace("/dashboard");
-  }
 
   return (
     <div className="flex flex-col items-center gap-7 h-full justify-center">

@@ -8,7 +8,7 @@ interface ContextProps {
   form: FormInputs;
 }
 
-type FormInputs = {
+export type FormInputs = {
   descricao: string;
   tipo: "Dinheiro" | "Crédito" | "Débito" | "Poupança" | "";
   saldoInicial?: number;
@@ -44,9 +44,9 @@ export const NewFormProvider = ({ children }: { children: ReactNode }) => {
     setForm((oldForm) => ({ ...oldForm, ...updatedValue }));
   };
 
-  useEffect(() => {
-    console.log(form);
-  }, [form]);
+  // useEffect(() => {
+  //   console.log(form);
+  // }, [form]);
 
   return (
     <NewContext.Provider

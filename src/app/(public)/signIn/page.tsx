@@ -13,6 +13,7 @@ import { signIn } from "next-auth/react";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 
 type formType = {
   email: string;
@@ -33,12 +34,20 @@ const SignIn = () => {
     resolver: zodResolver(loginSchema),
   });
 
+  const router = useRouter();
+
   const handleLogin = async (data: formType) => {
     const signInData = await signIn("credentials", {
       email: data.email,
       password: data.password,
+      redirect: false,
     });
-    console.log(signInData);
+
+    if (signInData?.error) {
+      console.error(signInData.error);
+    } else {
+      router.push("/dashboard");
+    }
   };
 
   return (

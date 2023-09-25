@@ -90,7 +90,7 @@ const StepCredito = () => {
           className="rounded-full font-medium items-center text-lg px-5 py-6 gap-2"
           variant={"despesa"}
         >
-          Avançar
+          Criar conta
           <ChevronRight />
         </Button>
       </div>

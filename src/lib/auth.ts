@@ -10,6 +10,7 @@ export const authOptions: NextAuthOptions = {
     signIn: "/signIn",
   },
   adapter: PrismaAdapter(prisma),
+  secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
   },
@@ -40,10 +41,24 @@ export const authOptions: NextAuthOptions = {
 
         return {
           id: `${existingUser.id}`,
-          username: existingUser.username,
+          // username: existingUser.username,
           email: existingUser.email,
         };
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user, session }) {
+      if (user) {
+        token.id = user.id;
+      }
+
+      return token;
+    },
+    async session({ session, user, token }) {
+      session.user.id = String(token.id);
+
+      return session;
+    },
+  },
 };

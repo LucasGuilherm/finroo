@@ -5,12 +5,12 @@ import { NewContext } from "../NewContext";
 import { Plus, PlusCircle } from "lucide-react";
 import Link from "next/link";
 import { ItemConta } from "../components/itemConta";
-import { conta } from "../../accounts/page";
 import { useQuery } from "@tanstack/react-query";
+import { fetchApi } from "@/lib/fetchWrap";
+import { conta } from "../../accounts/components/accountsList";
 
 const getContas = async () => {
-  let data = await fetch("https://finroo.vercel.app/api/contas");
-  const { listaContas } = await data.json();
+  let { listaContas } = await fetchApi<{ listaContas: conta[] }>("/contas");
 
   return listaContas;
 };
@@ -19,13 +19,13 @@ const StepConta = () => {
   const { handleNext, handleFormInput, form } = useContext(NewContext);
   const { tipo } = form;
 
-  const { data, isLoading } = useQuery<conta[]>({
+  const { data, isLoading, isError, error } = useQuery<conta[]>({
     queryKey: ["contas"],
     queryFn: getContas,
   });
 
-  if (isLoading) {
-    return <span>Loading...</span>;
+  if (isError) {
+    console.log(error);
   }
 
   const handleInput = (value: number) => {
@@ -43,7 +43,7 @@ const StepConta = () => {
             <ItemConta
               key={conta.id}
               id={conta.id}
-              nome={conta.nome}
+              nome={conta.conta}
               onClick={handleInput}
             />
           );

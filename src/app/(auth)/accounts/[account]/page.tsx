@@ -1,4 +1,7 @@
+"use client";
+
 import NavHeader from "@/components/navHeader";
+import { useSession } from "next-auth/react";
 
 type pageProps = {
   params: { account: string };

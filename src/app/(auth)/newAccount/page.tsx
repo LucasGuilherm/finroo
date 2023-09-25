@@ -8,15 +8,15 @@ import { NewContext } from "./NewContext";
 
 function NewAccount() {
   const router = useRouter();
-  const { step } = useContext(NewContext);
+  const { step, handleBack } = useContext(NewContext);
 
   const handleIconClick = () => {
-    if (true) {
+    if (step == 1 || step == 4) {
       router.back();
       return;
     }
 
-    // handleBack();
+    handleBack();
   };
 
   return (

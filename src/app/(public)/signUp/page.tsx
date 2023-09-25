@@ -23,7 +23,7 @@ type formType = {
 };
 
 const postNewAccount = async (accountInfo: formType) => {
-  const data = await fetch("https://finroo.vercel.app/api/user", {
+  const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -68,7 +68,7 @@ const SignUp = () => {
       router.replace("/signIn");
     },
     onError(error) {
-      console.log(error);
+      console.error(error);
     },
   });
 
