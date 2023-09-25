@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getContas } from "../../newTransaction/steps/StepConta";
+import Loading from "../../loading";
 
 export type conta = {
   id: number;
@@ -23,9 +24,13 @@ const AccountsList = () => {
     queryFn: getContas,
   });
 
+  if (!listaContas) {
+    return <Loading />;
+  }
+
   return (
     <div className="flex flex-col gap-4">
-      {listaContas?.map((conta) => {
+      {listaContas.map((conta) => {
         return (
           <Link
             key={conta.id}
@@ -34,6 +39,7 @@ const AccountsList = () => {
           >
             <CreditCard size={24} />
             <span>{conta.conta}</span>
+            <span className="ml-auto">{conta.tipo}</span>
           </Link>
         );
       })}

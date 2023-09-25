@@ -18,7 +18,6 @@ const postConta = async (conta: FormInputs) => {
 
 const StepConcluido = () => {
   const { form } = useContext(NewContext);
-
   const router = useRouter();
 
   const mutation = useMutation({

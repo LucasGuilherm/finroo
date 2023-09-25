@@ -26,16 +26,16 @@ model Lancamentos {
   tipo      String
   descricao String
   valor     Decimal
-  data      DateTime @default(now())
+  data      DateTime
 
-  // contaId Int
-  // conta   Contas? @relation(fields: [contaId], references: [id])
+  contaId Int
+  conta   Contas @relation(fields: [contaId], references: [id])
 
   // categoriaId Int
   // categoria   Categorias? @relation(fields: [categoriaId], references: [id])
-
-  // @@index([contaId])
   // @@index([categoriaId])
+
+  @@index([contaId])
 }
 
 model Contas {
@@ -48,7 +48,7 @@ model Contas {
   userId Int
   user   User @relation(fields: [userId], references: [id])
 
-  // lancamentos Lancamentos[]
+  lancamentos Lancamentos[]
 
   @@index([userId])
 }

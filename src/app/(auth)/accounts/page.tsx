@@ -4,8 +4,6 @@ import AccountsList from "./components/accountsList";
 import { Suspense } from "react";
 import Loading from "../loading";
 
-// export const revalidate = 1;
-
 const Accounts = () => {
   return (
     <>

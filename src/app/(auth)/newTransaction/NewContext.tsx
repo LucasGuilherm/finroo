@@ -13,10 +13,10 @@ interface ContextProps {
 }
 
 export type FormInputs = {
-  conta: string;
+  conta: number;
   valor: number;
   descricao: string;
-  data: Date | null;
+  data: string | "";
   categoria: string;
   tipo: "Receita" | "Despesa";
 };
@@ -29,8 +29,8 @@ export const NewContext = createContext<ContextProps>({
   corDestaque: "despesa",
   form: {
     categoria: "",
-    conta: "",
-    data: null,
+    conta: 0,
+    data: "",
     descricao: "",
     valor: 0,
     tipo: "Despesa",
@@ -49,8 +49,8 @@ export const NewFormProvider = ({ children }: { children: ReactNode }) => {
   const [step, setStep] = useState(1);
   const [form, setForm] = useState<FormInputs>({
     categoria: "",
-    conta: "",
-    data: null,
+    conta: 0,
+    data: "",
     descricao: "",
     valor: 0,
     tipo: tipo,
@@ -62,6 +62,10 @@ export const NewFormProvider = ({ children }: { children: ReactNode }) => {
   const handleBack = () => {
     setStep((old) => old - 1);
   };
+
+  useEffect(() => {
+    console.log(form);
+  }, [form]);
 
   const handleFormInput = ({ chave, valor }: { chave: string; valor: any }) => {
     const updatedValue = { [chave]: valor };

@@ -17,13 +17,15 @@ export const getLancamentos = async () => {
 };
 
 export const createLancamento = async (dados: FormInputs) => {
-  const { tipo, valor, descricao } = dados;
+  const { tipo, valor, descricao, conta, data } = dados;
 
   const lancamento = await prisma.lancamentos.create({
     data: {
       descricao,
       tipo,
       valor,
+      data,
+      contaId: conta,
     },
   });
   return lancamento;

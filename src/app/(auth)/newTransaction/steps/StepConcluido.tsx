@@ -4,7 +4,7 @@ import { PencilIcon } from "lucide-react";
 import { useContext, useEffect } from "react";
 import { FormInputs, NewContext } from "../NewContext";
 import { useMutation } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { fetchApi } from "@/lib/fetchWrap";
 
 const postLancamento = async (lancamento: FormInputs) => {
@@ -23,15 +23,15 @@ const StepConcluido = () => {
   const router = useRouter();
 
   const mutation = useMutation({
-    mutationFn: () => postLancamento(form),
+    mutationFn: (data: FormInputs) => postLancamento(data),
   });
 
-  if (mutation.isSuccess) {
-    router.replace("/dashboard");
-  }
-
   useEffect(() => {
-    mutation.mutate();
+    mutation.mutate(form, {
+      onSuccess: () => {
+        router.replace("/dashboard");
+      },
+    });
   }, []);
 
   return (
