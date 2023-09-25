@@ -13,9 +13,9 @@ const Accounts = () => {
 
       <h1 className="text-2xl font-medium">Minhas contas</h1>
 
-      {/* <Suspense fallback={<Loading />}> */}
-      <AccountsList />
-      {/* </Suspense> */}
+      <Suspense fallback={<Loading />}>
+        <AccountsList />
+      </Suspense>
 
       <Link
         className="bg-slate-200 flex flex-row justify-center gap-3 p-4 rounded-lg"

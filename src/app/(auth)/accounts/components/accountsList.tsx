@@ -5,6 +5,8 @@ import { fetchApi } from "@/lib/fetchWrap";
 import { CreditCard } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getContas } from "../../newTransaction/steps/StepConta";
 
 export type conta = {
   id: number;
@@ -16,34 +18,14 @@ export type conta = {
 };
 
 const AccountsList = () => {
-  const [listaContas, setLista] = useState<conta[]>();
-
-  const getAccounts = async () => {
-    const { listaContas } = await fetchApi<{
-      listaContas: conta[];
-      message?: string;
-    }>("/contas/getContas", {
-      // headers: headers(),
-    });
-
-    setLista(listaContas);
-
-    // return listaContas;
-  };
-
-  useEffect(() => {
-    getAccounts();
-  }, []);
-
-  if (!listaContas) {
-    return <h1>Sem resposta</h1>;
-  }
-
-  // await new Promise((r) => setTimeout(r, 2000));
+  const { data: listaContas } = useQuery<conta[]>({
+    queryKey: ["contas"],
+    queryFn: getContas,
+  });
 
   return (
     <div className="flex flex-col gap-4">
-      {listaContas.map((conta) => {
+      {listaContas?.map((conta) => {
         return (
           <Link
             key={conta.id}

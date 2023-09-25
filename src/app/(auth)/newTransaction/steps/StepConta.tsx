@@ -9,8 +9,10 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchApi } from "@/lib/fetchWrap";
 import { conta } from "../../accounts/components/accountsList";
 
-const getContas = async () => {
-  let { listaContas } = await fetchApi<{ listaContas: conta[] }>("/contas");
+export const getContas = async () => {
+  let { listaContas } = await fetchApi<{ listaContas: conta[] }>(
+    "/contas/getContas"
+  );
 
   return listaContas;
 };
