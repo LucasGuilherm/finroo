@@ -1,6 +1,10 @@
 import { authOptions } from "@/lib/auth";
-import { SessionProvider } from "@/providers/sessionProvider";
+import {
+  CheckErrorSession,
+  SessionProvider,
+} from "@/providers/sessionProvider";
 import { getServerSession } from "next-auth";
+import { signOut } from "next-auth/react";
 import { redirect } from "next/navigation";
 
 export default async function RootLayout({
@@ -11,10 +15,13 @@ export default async function RootLayout({
   const session = await getServerSession(authOptions);
   // console.log(session);
 
-  // if (!session) {
-  //   redirect("/signIn");
-  //   return;
-  // }
+  if (!session) {
+    redirect("/signIn");
+  }
 
-  return <SessionProvider session={session}>{children}</SessionProvider>;
+  return (
+    <SessionProvider session={session}>
+      <CheckErrorSession>{children}</CheckErrorSession>
+    </SessionProvider>
+  );
 }

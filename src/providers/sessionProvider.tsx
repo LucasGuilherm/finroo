@@ -1,3 +1,15 @@
 "use client";
 
-export { SessionProvider } from "next-auth/react";
+import { SessionProvider, signOut, useSession } from "next-auth/react";
+
+const CheckErrorSession = ({ children }: { children: React.ReactNode }) => {
+  const { data: session } = useSession();
+
+  if (session?.user.error) {
+    signOut({ callbackUrl: "/signIn" });
+  }
+
+  return <>{children}</>;
+};
+
+export { SessionProvider, CheckErrorSession };
