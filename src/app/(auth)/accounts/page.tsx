@@ -11,7 +11,7 @@ const Accounts = () => {
 
       <h1 className="text-2xl font-medium">Minhas contas</h1>
 
-      <Suspense fallback={<Loading />}>
+      <Suspense>
         <AccountsList />
       </Suspense>
 

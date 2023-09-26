@@ -1,7 +1,7 @@
 "use client";
 
-import { PencilIcon } from "lucide-react";
-import { useContext, useEffect } from "react";
+import { PencilIcon, X } from "lucide-react";
+import { useContext, useEffect, useState } from "react";
 import { FormInputs, NewContext } from "../NewContext";
 import { useMutation } from "@tanstack/react-query";
 import { redirect, useRouter } from "next/navigation";
@@ -21,9 +21,14 @@ const postLancamento = async (lancamento: FormInputs) => {
 const StepConcluido = () => {
   const { form } = useContext(NewContext);
   const router = useRouter();
+  const [error, setError] = useState("");
 
   const mutation = useMutation({
     mutationFn: (data: FormInputs) => postLancamento(data),
+    onError: (e) => {
+      setError(`Falha ao registrar ${form.tipo.toLowerCase()}`);
+    },
+    retry: 1,
   });
 
   useEffect(() => {
@@ -36,10 +41,14 @@ const StepConcluido = () => {
 
   return (
     <div className="flex flex-col items-center gap-7 h-full justify-center">
-      <span className="font-medium text-3xl">
-        Registrando {form.tipo.toLocaleLowerCase()}
+      <span className="font-medium text-3xl text-center text-red-600">
+        {error || `Registrando ${form.tipo.toLowerCase()}`}
       </span>
-      <PencilIcon size={36} />
+      {error ? (
+        <X size={36} className="stroke-red-600" />
+      ) : (
+        <PencilIcon size={28} />
+      )}
     </div>
   );
 };
