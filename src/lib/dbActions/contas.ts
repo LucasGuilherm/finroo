@@ -1,8 +1,6 @@
 import prisma from "@/lib/prisma";
 
 export const getContasUser = async (userId: number) => {
-  console.log(userId);
-
   const contas = await prisma.contas.findMany({
     where: {
       userId: userId,

@@ -13,8 +13,6 @@ const postLancamento = async (lancamento: FormInputs) => {
     body: JSON.stringify(lancamento),
   });
 
-  console.log(data);
-
   return data;
 };
 

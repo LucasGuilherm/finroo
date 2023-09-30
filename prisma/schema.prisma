@@ -18,7 +18,8 @@ model User {
   username String?
   password String
 
-  contas Contas[]
+  contas      Contas[]
+  Lancamentos Lancamentos[]
 }
 
 model Lancamentos {
@@ -31,10 +32,14 @@ model Lancamentos {
   contaId Int
   conta   Contas @relation(fields: [contaId], references: [id])
 
-  // categoriaId Int
-  // categoria   Categorias? @relation(fields: [categoriaId], references: [id])
-  // @@index([categoriaId])
+  categoriaId Int
+  categoria   Categorias @relation(fields: [categoriaId], references: [id])
 
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([categoriaId])
   @@index([contaId])
 }
 
@@ -42,6 +47,7 @@ model Contas {
   id         Int    @id @default(autoincrement())
   conta      String
   tipo       String
+  // saldo      Int
   fechamento Int?
   vencimento Int?
 
@@ -56,6 +62,7 @@ model Contas {
 model Categorias {
   id        Int    @id @default(autoincrement())
   categoria String
+  icon      String
 
-  // lancamentos Lancamentos[]
+  lancamentos Lancamentos[]
 }

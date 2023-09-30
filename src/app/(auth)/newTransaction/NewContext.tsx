@@ -17,7 +17,7 @@ export type FormInputs = {
   valor: number;
   descricao: string;
   data: string | "";
-  categoria: string;
+  categoria: number;
   tipo: "Receita" | "Despesa";
 };
 
@@ -28,7 +28,7 @@ export const NewContext = createContext<ContextProps>({
   step: 1,
   corDestaque: "despesa",
   form: {
-    categoria: "",
+    categoria: 0,
     conta: 0,
     data: "",
     descricao: "",
@@ -48,7 +48,7 @@ export const NewFormProvider = ({ children }: { children: ReactNode }) => {
 
   const [step, setStep] = useState(1);
   const [form, setForm] = useState<FormInputs>({
-    categoria: "",
+    categoria: 0,
     conta: 0,
     data: "",
     descricao: "",
@@ -62,10 +62,6 @@ export const NewFormProvider = ({ children }: { children: ReactNode }) => {
   const handleBack = () => {
     setStep((old) => old - 1);
   };
-
-  useEffect(() => {
-    console.log(form);
-  }, [form]);
 
   const handleFormInput = ({ chave, valor }: { chave: string; valor: any }) => {
     const updatedValue = { [chave]: valor };
