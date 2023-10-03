@@ -53,6 +53,8 @@ export const authOptions: NextAuthOptions = {
       if (token.email) {
         const userExists = await findUserByEmail(token.email);
 
+        console.log(userExists);
+
         if (!userExists) {
           token.error = true;
         }
