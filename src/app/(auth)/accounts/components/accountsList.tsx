@@ -1,10 +1,7 @@
 "use client";
 
-import { headers } from "next/headers";
-import { fetchApi } from "@/lib/fetchWrap";
 import { CreditCard } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getContas } from "../../newTransaction/steps/StepConta";
 import Loading from "../../loading";
@@ -16,6 +13,7 @@ export type conta = {
   fechamento?: number;
   vencimento?: number;
   userId: number;
+  saldo: string;
 };
 
 const AccountsList = () => {
@@ -38,7 +36,7 @@ const AccountsList = () => {
             className="bg-slate-200 flex flex-row gap-3 p-4 rounded-lg"
           >
             <CreditCard size={24} />
-            <span>{conta.conta}</span>
+            <span className="font-medium">{conta.conta}</span>
             <span className="ml-auto">{conta.tipo}</span>
           </Link>
         );

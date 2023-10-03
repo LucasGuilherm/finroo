@@ -27,7 +27,8 @@ const StepConcluido = () => {
   useEffect(() => {
     mutation.mutate(form, {
       onSuccess: () => {
-        router.replace("/accounts");
+        // router.replace("/accounts");
+        router.back();
       },
     });
   }, []);

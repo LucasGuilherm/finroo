@@ -29,6 +29,21 @@ export const getContaByNameAndUser = async ({
   return contaDB;
 };
 
+type getContaIdProps = {
+  contaId: number;
+  userId: number;
+};
+export const getContaById = async ({ contaId, userId }: getContaIdProps) => {
+  const contaDB = await prisma.contas.findFirst({
+    where: {
+      id: contaId,
+      userId,
+    },
+  });
+
+  return contaDB;
+};
+
 type createContaUserProps = {
   conta: string;
   userId: number;
@@ -51,4 +66,45 @@ export const createContaUser = async (novaConta: createContaUserProps) => {
   });
 
   return newConta;
+};
+
+type getContaSaldo = {
+  contaId: number;
+  userId: number;
+};
+export const getContaSaldo = async ({ contaId, userId }: getContaSaldo) => {
+  const saldoCalc = await prisma.lancamentos.aggregate({
+    where: {
+      userId: userId,
+      contaId: contaId,
+    },
+    _sum: {
+      valor: true,
+    },
+  });
+
+  return Number(saldoCalc._sum.valor || 0);
+};
+
+type atualizarSaldoConta = {
+  contaId: number;
+  userId: number;
+};
+export const atualizarSaldoConta = async ({
+  contaId,
+  userId,
+}: atualizarSaldoConta) => {
+  const saldoCalc = await getContaSaldo({ contaId, userId });
+
+  const saldoConta = await prisma.contas.update({
+    where: {
+      userId: userId,
+      id: contaId,
+    },
+    data: {
+      saldo: Number(saldoCalc),
+    },
+  });
+
+  return saldoConta.saldo;
 };

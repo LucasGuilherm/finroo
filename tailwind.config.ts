@@ -18,12 +18,12 @@ module.exports = {
     extend: {
       colors: {
         receita: {
-          DEFAULT: "hsl(var(--receita))",
-          foreground: "hsl(var(--receita-foreground))",
+          DEFAULT: "hsl(var(--receita) / <alpha-value>)",
+          foreground: "hsl(var(--receita-foreground) / <alpha-value>)",
         },
         despesa: {
-          DEFAULT: "hsl(var(--despesa))",
-          foreground: "hsl(var(--despesa-foreground))",
+          DEFAULT: "hsl(var(--despesa) / <alpha-value>)",
+          foreground: "hsl(var(--despesa-foreground) / <alpha-value>)",
         },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

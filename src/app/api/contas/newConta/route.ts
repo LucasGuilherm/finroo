@@ -1,6 +1,7 @@
 import { FormInputs } from "@/app/(auth)/newAccount/NewContext";
 import { authOptions } from "@/lib/auth";
 import { createContaUser, getContaByNameAndUser } from "@/lib/dbActions/contas";
+import { createLancamento } from "@/lib/lancamentos";
 import { getServerSession } from "next-auth";
 import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
@@ -31,6 +32,16 @@ export const POST = async (req: Request) => {
     tipo,
     fechamento,
     vencimento,
+  });
+
+  const saldoInicialConta = await createLancamento({
+    categoria: 4,
+    conta: novaConta.id,
+    data: new Date().toISOString(),
+    descricao: "Saldo Inicial",
+    tipo: "Receita",
+    userId: userId,
+    valor: Number(saldoInicial),
   });
 
   return NextResponse.json({ novaConta });

@@ -44,10 +44,10 @@ model Lancamentos {
 }
 
 model Contas {
-  id         Int    @id @default(autoincrement())
+  id         Int      @id @default(autoincrement())
   conta      String
   tipo       String
-  // saldo      Int
+  saldo      Decimal?
   fechamento Int?
   vencimento Int?
 

@@ -19,10 +19,6 @@ const StepValor = () => {
 
     if (!Number(tempValue)) return;
 
-    if (form.tipo == "Despesa") {
-      tempValue = String(Number(tempValue) * -1);
-    }
-
     handleFormInput({ chave: "valor", valor: tempValue });
 
     handleNext();
@@ -37,6 +33,7 @@ const StepValor = () => {
     }
 
     tempValue = tempValue.replace(".", ",");
+    console.log(tempValue);
     tempValue = tempValue.replace(/(\d)(\d{3})(\d{3}),/g, "$1.$2.$3,");
     tempValue = "R$ " + tempValue.replace(/(\d)(\d{3}),/g, "$1.$2,");
 

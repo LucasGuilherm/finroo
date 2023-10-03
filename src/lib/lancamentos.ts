@@ -1,3 +1,8 @@
+import {
+  atualizarSaldoConta,
+  getContaById,
+  getContaSaldo,
+} from "./dbActions/contas";
 import prisma from "./prisma";
 import { format, lastDayOfMonth } from "date-fns";
 
@@ -33,7 +38,7 @@ export const createLancamento = async (dados: createLancamento) => {
     data: {
       descricao,
       tipo,
-      valor,
+      valor: tipo == "Despesa" ? valor * -1 : valor,
       data,
       contaId: conta,
       categoriaId: categoria,
@@ -70,8 +75,7 @@ export const totalDespesasMes = async (userId: number) => {
   const firstDateOfMonth = format(today, "yyyy-MM-01");
   const lastDateOfMonth = format(lastDayOfMonth(today), "yyyy-MM-dd");
 
-  const totalDespesas = await prisma.lancamentos.groupBy({
-    by: ["userId"],
+  const totalDespesas = await prisma.lancamentos.aggregate({
     where: {
       tipo: {
         equals: "Despesa",
@@ -87,7 +91,7 @@ export const totalDespesasMes = async (userId: number) => {
     },
   });
 
-  return Math.abs(Number(totalDespesas[0]?._sum.valor)) || 0;
+  return Math.abs(Number(totalDespesas?._sum.valor)) || 0;
 };
 
 export const totalReceitasMes = async (userId: number) => {
@@ -95,8 +99,7 @@ export const totalReceitasMes = async (userId: number) => {
   const firstDateOfMonth = format(today, "yyyy-MM-01");
   const lastDateOfMonth = format(lastDayOfMonth(today), "yyyy-MM-dd");
 
-  const totalReceitas = await prisma.lancamentos.groupBy({
-    by: ["userId"],
+  const totalReceitas = await prisma.lancamentos.aggregate({
     where: {
       tipo: {
         equals: "Receita",
@@ -112,12 +115,11 @@ export const totalReceitasMes = async (userId: number) => {
     },
   });
 
-  return Math.abs(Number(totalReceitas[0]?._sum.valor)) || 0;
+  return Math.abs(Number(totalReceitas?._sum.valor)) || 0;
 };
 
 export const totalCreditoMes = async (userId: number) => {
-  const totalCredito = await prisma.lancamentos.groupBy({
-    by: ["userId"],
+  const totalCredito = await prisma.lancamentos.aggregate({
     where: {
       tipo: {
         equals: "Despesa",
@@ -134,7 +136,7 @@ export const totalCreditoMes = async (userId: number) => {
     },
   });
 
-  return Math.abs(Number(totalCredito[0]?._sum.valor)) || 0;
+  return Math.abs(Number(totalCredito?._sum.valor)) || 0;
 };
 
 export const totalEconomiasMes = async (userId: number) => {
@@ -165,4 +167,67 @@ export const totalEconomiasMes = async (userId: number) => {
   });
 
   return Math.abs(Number(totalEconomias[0]?._sum.valor)) || 0;
+};
+
+type transferirSaldo = {
+  contaSaida: number;
+  contaEntrada: number;
+  userId: number;
+  valor: number;
+};
+export const transferirSaldo = async ({
+  contaSaida,
+  contaEntrada,
+  userId,
+  valor,
+}: transferirSaldo) => {
+  const saldoConta = await getContaSaldo({ contaId: contaSaida, userId });
+
+  if (saldoConta < valor) {
+    return { erro: "Saldo insuficiente!" };
+  }
+
+  const [infoContaSaida, infoContaEntrada] = await Promise.all([
+    getContaById({ contaId: contaSaida, userId }),
+    getContaById({ contaId: contaEntrada, userId }),
+  ]);
+
+  const saida = await createLancamento({
+    categoria: 4,
+    conta: contaSaida,
+    data: new Date().toISOString(),
+    descricao: `Transferencia para ${infoContaEntrada?.conta}`,
+    tipo: "Despesa",
+    userId,
+    valor,
+  });
+
+  if (!saida) {
+    return { erro: "Falha ao realizar transferencia, tente novamente." };
+  }
+
+  const entrada = await createLancamento({
+    categoria: 4,
+    conta: contaEntrada,
+    data: new Date().toISOString(),
+    descricao: `Transferencia de ${infoContaSaida?.conta}`,
+    tipo: "Receita",
+    userId,
+    valor,
+  });
+
+  if (!entrada) {
+    await prisma.lancamentos.delete({
+      where: {
+        id: saida.id,
+      },
+    });
+  }
+
+  const [saldoEntrada, saldoSaida] = await Promise.all([
+    atualizarSaldoConta({ contaId: contaEntrada, userId }),
+    atualizarSaldoConta({ contaId: contaSaida, userId }),
+  ]);
+
+  return { success: true };
 };

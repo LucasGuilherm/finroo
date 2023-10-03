@@ -43,6 +43,7 @@ const ResumoTotal = async () => {
         <LinhaResumo titulo="Receitas" valor={mascaraMoeda(totalReceitas)} />
         <LinhaResumo titulo="Economias" valor={mascaraMoeda(totalEconomias)} />
       </div>
+      {/* <LinhaResumo titulo="Economias" valor={mascaraMoeda(totalEconomias)} /> */}
     </div>
   );
 };

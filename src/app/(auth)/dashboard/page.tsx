@@ -5,6 +5,7 @@ import { Bell } from "lucide-react";
 import BtnsNew from "./components/btnsNew";
 import { MinhasContas } from "./components/minhasContas";
 import SaldoTotal from "./components/saldoTotal";
+import Link from "next/link";
 
 const Dashboard = () => {
   return (
@@ -23,18 +24,18 @@ const Dashboard = () => {
 
       <Separator />
 
-      {/* <Link
-        className="font-medium bg-zinc-100 text-black text-base hover:bg-slate-200 justify-start py-5 px-4 rounded-[8px]"
-        href={"/accounts"}
-      >
-        Minhas contas
-      </Link> */}
-
       <ResumoTotal />
 
       <Separator />
 
       {/* <MinhasContas /> */}
+
+      <Link
+        className="font-medium bg-zinc-100 text-black text-base hover:bg-slate-200 justify-start py-5 px-4 rounded-[8px]"
+        href={"/accounts"}
+      >
+        Minhas contas
+      </Link>
 
       {/* <Separator /> */}
     </>

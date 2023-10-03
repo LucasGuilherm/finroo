@@ -1,13 +1,11 @@
-import NavHeader from "@/components/navHeader";
 import Link from "next/link";
 import AccountsList from "./components/accountsList";
 import { Suspense } from "react";
-import Loading from "../loading";
 
 const Accounts = () => {
   return (
     <>
-      <NavHeader variant="close" />
+      {/* <NavHeader variant="close" /> */}
 
       <h1 className="text-2xl font-medium">Minhas contas</h1>
 
