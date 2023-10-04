@@ -4,7 +4,6 @@ import {
   SessionProvider,
 } from "@/providers/sessionProvider";
 import { getServerSession } from "next-auth";
-import { signOut } from "next-auth/react";
 import { redirect } from "next/navigation";
 
 export default async function RootLayout({
@@ -17,6 +16,8 @@ export default async function RootLayout({
   console.log({ session: session?.user });
 
   if (!session?.user) {
+    console.log("Erro sessao");
+
     redirect("/signIn");
   }
 
