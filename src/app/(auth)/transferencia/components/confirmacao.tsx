@@ -30,7 +30,6 @@ const postTransferencia = async (data: dadosForm) => {
 const ConfirmacaoTransferencia = ({ data }: { data: dadosForm }) => {
   const router = useRouter();
   const [error, setError] = useState("");
-  console.log(data);
 
   const mutation = useMutation({
     mutationFn: (data: dadosForm) => postTransferencia(data),

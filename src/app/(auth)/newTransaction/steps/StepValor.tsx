@@ -33,7 +33,6 @@ const StepValor = () => {
     }
 
     tempValue = tempValue.replace(".", ",");
-    console.log(tempValue);
     tempValue = tempValue.replace(/(\d)(\d{3})(\d{3}),/g, "$1.$2.$3,");
     tempValue = "R$ " + tempValue.replace(/(\d)(\d{3}),/g, "$1.$2,");
 

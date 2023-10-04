@@ -27,7 +27,7 @@ const StepConta = () => {
   });
 
   if (isError) {
-    console.log(error);
+    console.error(error);
   }
 
   const handleInput = (value: number) => {
@@ -51,10 +51,7 @@ const StepConta = () => {
           );
         })}
         <Link href={"/newAccount"}>
-          <div
-            className="flex flex-row items-center gap-4 mt-4"
-            onClick={() => console.log("criar conta")}
-          >
+          <div className="flex flex-row items-center gap-4 mt-4">
             <div className="bg-slate-200 rounded-full w-12 h-12 flex">
               <Plus className="m-auto" size={24}></Plus>
             </div>

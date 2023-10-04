@@ -44,10 +44,6 @@ export const NewFormProvider = ({ children }: { children: ReactNode }) => {
     setForm((oldForm) => ({ ...oldForm, ...updatedValue }));
   };
 
-  useEffect(() => {
-    console.log(form);
-  }, [form]);
-
   return (
     <NewContext.Provider
       value={{ handleBack, handleNext, step, handleFormInput, form }}

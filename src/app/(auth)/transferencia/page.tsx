@@ -26,10 +26,6 @@ const NovaTransferencia = () => {
   const [data, setData] = useState(dadosIniciais);
   const [concluido, setConcluido] = useState(false);
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
   const handleNext = (inputs: Partial<dadosForm>) => {
     setData((old) => {
       return {
@@ -52,10 +48,7 @@ const NovaTransferencia = () => {
 
   const handleNextClick = () => {
     if (isLast) {
-      console.log(isLast);
-
       setConcluido(true);
-
       return;
     }
 
