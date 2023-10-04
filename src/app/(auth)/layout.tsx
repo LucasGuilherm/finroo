@@ -22,9 +22,7 @@ export default async function RootLayout({
 
   return (
     <SessionProvider session={session}>
-      {/* <CheckErrorSession> */}
-      {children}
-      {/* </CheckErrorSession> */}
+      <CheckErrorSession>{children}</CheckErrorSession>
     </SessionProvider>
   );
 }
