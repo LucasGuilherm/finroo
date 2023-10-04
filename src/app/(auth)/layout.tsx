@@ -18,7 +18,7 @@ export default async function RootLayout({
   if (!session?.user) {
     console.log("Erro sessao");
 
-    redirect("/signIn");
+    // redirect("/signIn");
   }
 
   return (
