@@ -8,7 +8,6 @@ import { compare } from "bcrypt";
 export const authOptions: NextAuthOptions = {
   pages: {
     signIn: "/signIn",
-    signOut: "/signOut",
   },
   adapter: PrismaAdapter(prisma),
   secret: process.env.NEXTAUTH_SECRET,
