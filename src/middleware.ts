@@ -1,8 +1,12 @@
-import { withAuth } from "next-auth/middleware";
+export { default } from "next-auth/middleware";
 
-export default withAuth({
-  // Matches the pages config in `[...nextauth]`
-  pages: {
-    signIn: "/signIn",
-  },
-});
+// export withAuth({
+//   // Matches the pages config in `[...nextauth]`
+//   pages: {
+//     signIn: "/signIn",
+//   },
+// });
+
+export const config = {
+  matcher: ["/(?!signIn|signUp|$)"],
+};
