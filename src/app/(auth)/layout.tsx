@@ -22,8 +22,11 @@ export default async function RootLayout({
   }
 
   return (
-    <SessionProvider session={session}>
-      <CheckErrorSession>{children}</CheckErrorSession>
-    </SessionProvider>
+    <div>
+      {JSON.stringify(session)}
+      <SessionProvider session={session}>
+        <CheckErrorSession>{children}</CheckErrorSession>
+      </SessionProvider>
+    </div>
   );
 }
