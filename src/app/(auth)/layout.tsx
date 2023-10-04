@@ -16,9 +16,9 @@ export default async function RootLayout({
 
   console.log({ session });
 
-  if (!session) {
-    redirect("/signIn");
-  }
+  // if (!session) {
+  //   redirect("/signIn");
+  // }
 
   return (
     <SessionProvider session={session}>
