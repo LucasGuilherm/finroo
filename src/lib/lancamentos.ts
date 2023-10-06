@@ -199,7 +199,7 @@ export const transferirSaldo = async ({
     descricao: `Transferencia para ${infoContaEntrada?.conta}`,
     tipo: "Transferencia",
     userId,
-    valor,
+    valor: -Math.abs(valor),
   });
 
   if (!saida) {
@@ -213,7 +213,7 @@ export const transferirSaldo = async ({
     descricao: `Transferencia de ${infoContaSaida?.conta}`,
     tipo: "Transferencia",
     userId,
-    valor,
+    valor: Math.abs(valor),
   });
 
   if (!entrada) {
