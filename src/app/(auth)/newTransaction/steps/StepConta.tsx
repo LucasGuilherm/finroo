@@ -8,6 +8,7 @@ import { ItemConta } from "../components/itemConta";
 import { useQuery } from "@tanstack/react-query";
 import { fetchApi } from "@/lib/fetchWrap";
 import { conta } from "../../accounts/components/accountsList";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export const getContas = async () => {
   let { listaContas } = await fetchApi<{ listaContas: conta[] }>(
@@ -40,7 +41,24 @@ const StepConta = () => {
     <>
       <h1 className="font-medium text-3xl">{`Qual conta deseja lançar a ${tipo.toLowerCase()}?`}</h1>
       <div className="flex flex-col gap-4">
+        {isLoading && (
+          <>
+            <div className="flex items-center gap-4">
+              <Skeleton className="rounded-full h-12 w-12" />
+              <Skeleton className="h-4 w-28" />
+            </div>
+            <div className="flex items-center gap-4">
+              <Skeleton className="rounded-full h-12 w-12" />
+              <Skeleton className="h-4 w-28" />
+            </div>
+          </>
+        )}
+
         {data?.map((conta) => {
+          if (form.tipo == "Receita" && conta.tipo == "Crédito") {
+            return;
+          }
+
           return (
             <ItemConta
               key={conta.id}

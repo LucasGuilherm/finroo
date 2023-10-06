@@ -11,11 +11,16 @@ import { dadosForm } from "../page";
 
 type props = {
   onClick: (inputs: Partial<dadosForm>) => void;
-  conta: number;
+  contaSaida: number;
 };
 
-const ContaInput = ({ onClick, conta }: props) => {
-  const { data, isLoading, isError, error } = useQuery<conta[]>({
+const ContaInput = ({ onClick, contaSaida }: props) => {
+  const {
+    data: dados,
+    isLoading,
+    isError,
+    error,
+  } = useQuery<conta[]>({
     queryKey: ["contas"],
     queryFn: getContas,
   });
@@ -34,7 +39,11 @@ const ContaInput = ({ onClick, conta }: props) => {
         Para qual conta deseja transferir?
       </h1>
       <div className="flex flex-col gap-4">
-        {data?.map((conta) => {
+        {dados?.map((conta) => {
+          if (conta.tipo == "Crédito" || conta.id == contaSaida) {
+            return false;
+          }
+
           return (
             <ItemConta
               key={conta.id}

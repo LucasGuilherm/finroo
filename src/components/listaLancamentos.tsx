@@ -55,7 +55,6 @@ const ListaLancamentos = async ({ conta }: { conta?: number }) => {
     <div className="w-full flex flex-col gap-6">
       <header className="flex items-center justify-between">
         <span className="text-lg font-medium">Recentes</span>
-        {/* <ChevronRight size={24} /> */}
       </header>
       <ul className="flex flex-col gap-5">
         {lancamentos.map((item) => {

@@ -34,15 +34,17 @@ export const POST = async (req: Request) => {
     vencimento,
   });
 
-  const saldoInicialConta = await createLancamento({
-    categoria: 4,
-    conta: novaConta.id,
-    data: new Date().toISOString(),
-    descricao: "Saldo Inicial",
-    tipo: "Receita",
-    userId: userId,
-    valor: Number(saldoInicial),
-  });
+  if (tipo !== "Crédito") {
+    const saldoInicialConta = await createLancamento({
+      categoria: 4,
+      conta: novaConta.id,
+      data: new Date().toISOString(),
+      descricao: "Saldo Inicial",
+      tipo: "Receita",
+      userId: userId,
+      valor: Number(saldoInicial),
+    });
+  }
 
   return NextResponse.json({ novaConta });
 };

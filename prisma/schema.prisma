@@ -47,7 +47,7 @@ model Contas {
   id         Int      @id @default(autoincrement())
   conta      String
   tipo       String
-  saldo      Decimal?
+  saldo      Decimal? @default(0)
   fechamento Int?
   vencimento Int?
 

@@ -27,7 +27,7 @@ type createLancamento = {
   descricao: string;
   data: string | "";
   categoria: number;
-  tipo: "Receita" | "Despesa";
+  tipo: "Receita" | "Despesa" | "Transferencia";
   userId: number;
 };
 
@@ -197,7 +197,7 @@ export const transferirSaldo = async ({
     conta: contaSaida,
     data: new Date().toISOString(),
     descricao: `Transferencia para ${infoContaEntrada?.conta}`,
-    tipo: "Despesa",
+    tipo: "Transferencia",
     userId,
     valor,
   });
@@ -211,7 +211,7 @@ export const transferirSaldo = async ({
     conta: contaEntrada,
     data: new Date().toISOString(),
     descricao: `Transferencia de ${infoContaSaida?.conta}`,
-    tipo: "Receita",
+    tipo: "Transferencia",
     userId,
     valor,
   });

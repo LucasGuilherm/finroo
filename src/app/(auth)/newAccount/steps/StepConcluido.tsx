@@ -30,6 +30,9 @@ const StepConcluido = () => {
         // router.replace("/accounts");
         router.back();
       },
+      onError: (error) => {
+        console.error(error);
+      },
     });
   }, []);
 

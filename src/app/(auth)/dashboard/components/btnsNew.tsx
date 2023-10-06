@@ -6,7 +6,7 @@ const BtnsNew = () => {
     <div className="flex flex-row gap-2 justify-center">
       <Link
         href={{ pathname: "/newTransaction", query: { tipo: "Receita" } }}
-        className="flex flex-col gap-2 py-4 px-3 items-center justify-center font-medium text-base flex-1 shadow rounded-[8px] bg-receita"
+        className="flex flex-row gap-2 py-4 px-3 items-center justify-center font-medium text-base flex-1 shadow rounded-full bg-receita"
       >
         <ArrowDown />
         Receita
@@ -14,7 +14,7 @@ const BtnsNew = () => {
 
       <Link
         href={{ pathname: "/newTransaction", query: { tipo: "Despesa" } }}
-        className="flex flex-col gap-2 py-4 px-3 items-center justify-center font-medium text-base flex-1 shadow rounded-[8px] bg-despesa"
+        className="flex flex-row gap-2 px-3 items-center py-4 justify-center font-medium text-base flex-1 shadow rounded-full bg-despesa"
       >
         <ArrowUp />
         Despesa
