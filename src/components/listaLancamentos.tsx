@@ -30,7 +30,7 @@ const ItemLancamentoLista = ({ valor, descricao, tipo, data }: itemProps) => {
         <span className="text-xs">{data}</span>
       </div>
 
-      <span className="ml-auto self-start font-medium text-lg">
+      <span className="ml-auto self-start font-medium text-lg whitespace-nowrap">
         R$ {valorFormat}
       </span>
     </li>
