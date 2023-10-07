@@ -1,7 +1,6 @@
 "use client";
 
-import { useContext, useRef, useState } from "react";
-import { NewContext } from "../NewContext";
+import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
 import { Input } from "@/components/ui/input";

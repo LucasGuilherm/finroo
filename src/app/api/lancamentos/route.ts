@@ -1,4 +1,3 @@
-import { FormInputs } from "@/app/(auth)/newTransaction/NewContext";
 import { TransactionForm } from "@/app/(auth)/newTransaction/page";
 import { authOptions } from "@/lib/auth";
 import { atualizarSaldoConta } from "@/lib/dbActions/contas";

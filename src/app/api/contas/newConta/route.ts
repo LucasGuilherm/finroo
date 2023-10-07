@@ -43,6 +43,7 @@ export const POST = async (req: Request) => {
       tipo: "Receita",
       userId: userId,
       valor: Number(saldoInicial),
+      pago: true,
     });
   }
 

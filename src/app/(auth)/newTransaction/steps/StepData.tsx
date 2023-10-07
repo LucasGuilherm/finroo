@@ -1,7 +1,6 @@
 "use client";
 
-import { useContext, useRef, useState } from "react";
-import { NewContext } from "../NewContext";
+import { useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { format, subDays } from "date-fns";
 import { Button } from "@/components/ui/button";
