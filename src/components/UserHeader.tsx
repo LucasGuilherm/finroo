@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
 
 import {
   Sheet,
@@ -16,8 +15,6 @@ import { Button } from "./ui/button";
 import { signOut } from "next-auth/react";
 
 const UserHeader = () => {
-  const userName = "Lucas";
-
   const handleLogout = () => {
     signOut();
   };
@@ -36,10 +33,9 @@ const UserHeader = () => {
                 src="/profile.jpg"
               />
             </div>
-            {/* <h1 className="font-medium text-base">Olá, {userName}</h1> */}
           </div>
         </SheetTrigger>
-        <SheetContent side={"left"}>
+        <SheetContent side={"right"}>
           <SheetHeader>
             <SheetTitle>Finroo</SheetTitle>
           </SheetHeader>

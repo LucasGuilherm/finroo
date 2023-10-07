@@ -3,45 +3,34 @@ import ResumoTotal from "./components/resumoTotal";
 import { Separator } from "@/components/ui/separator";
 import { ArrowRight, Bell } from "lucide-react";
 import BtnsNew from "./components/btnsNew";
-import { MinhasContas } from "./components/minhasContas";
+import { MeusCartoes } from "./components/meusCartoes";
 import SaldoTotal from "./components/saldoTotal";
 import Link from "next/link";
-import DespesasPendentes from "./components/despesasPendentes";
+import SessaoPendentes from "./components/despesasPendentes";
+import MinhasContas from "./components/minhasContas";
 
 const Dashboard = () => {
   return (
     <>
-      {/* <div className="flex flex-row justify-between items-center">
+      <section className="flex flex-col p-4 bg-zinc-0">
         <UserHeader />
-        <div className="flex flex-row bg-zinc-100 py-1 px-4 rounded-full justify-between gap-2">
-          <span>3</span>
-          <Bell />
+
+        <div className="flex flex-col gap-6">
+          <SaldoTotal />
+
+          <BtnsNew />
         </div>
-      </div> */}
+      </section>
 
-      <SaldoTotal />
+      <section className="flex flex-col gap-6 p-4">
+        <SessaoPendentes />
 
-      <BtnsNew />
+        <MinhasContas />
 
-      <DespesasPendentes />
+        <ResumoTotal />
 
-      <Link
-        className="bg-zinc-100 shadow hover:bg-slate-200 justify-between items-center py-5 px-4 rounded-xl flex"
-        href={"/accounts"}
-      >
-        <span className="font-medium text-black text-base">Minhas contas</span>
-        <ArrowRight />
-      </Link>
-
-      <Separator />
-
-      <ResumoTotal />
-
-      <Separator />
-
-      <MinhasContas />
-
-      {/* <Separator /> */}
+        <MeusCartoes />
+      </section>
     </>
   );
 };
