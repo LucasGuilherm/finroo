@@ -28,6 +28,7 @@ model Lancamentos {
   descricao String
   valor     Decimal
   data      DateTime
+  pago      Boolean  @default(true)
 
   contaId Int
   conta   Contas @relation(fields: [contaId], references: [id])
