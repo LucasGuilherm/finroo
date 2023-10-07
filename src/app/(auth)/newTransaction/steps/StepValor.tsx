@@ -1,17 +1,21 @@
 "use client";
 
-import { useContext, useState } from "react";
-import { NewContext } from "../NewContext";
+import { useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { TransactionForm } from "../page";
 
-const StepValor = () => {
-  const { handleNext, handleFormInput, corDestaque, form } =
-    useContext(NewContext);
-  const [input, setInput] = useState<string>();
+type StepValorProps = {
+  handleNext: (inputs: Partial<TransactionForm>) => void;
+  tipo: string;
+  corDestaque: "receita" | "despesa";
+};
 
-  const { tipo } = form;
+const StepValor = ({ handleNext, tipo, corDestaque }: StepValorProps) => {
+  const [input, setInput] = useState("");
+  const [pago, setPago] = useState(true);
 
   const handleSubmitInput = () => {
     let tempValue = input?.replace(/\D/g, "");
@@ -19,9 +23,10 @@ const StepValor = () => {
 
     if (!Number(tempValue)) return;
 
-    handleFormInput({ chave: "valor", valor: tempValue });
-
-    handleNext();
+    handleNext({
+      valor: Number(tempValue),
+      pago: pago,
+    });
   };
 
   const handleInput = (value: string) => {
@@ -55,7 +60,15 @@ const StepValor = () => {
           placeholder="R$ 0,00"
         />
       </div>
-      <div className="flex flex-row justify-end">
+      <div className="flex flex-row justify-between items-center">
+        <div className="flex items-center gap-6 font-medium text-3xl">
+          Pago
+          <Switch
+            checked={pago}
+            onCheckedChange={(old) => setPago(!!old)}
+            className="scale-125"
+          />
+        </div>
         <Button
           onClick={handleSubmitInput}
           className={`rounded-full font-medium items-center text-lg px-5 py-6 gap-2`}

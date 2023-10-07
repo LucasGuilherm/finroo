@@ -1,14 +1,13 @@
 "use client";
 
-import { useContext, useState } from "react";
-import { NewContext } from "../NewContext";
-import { Plus, PlusCircle } from "lucide-react";
+import { Plus } from "lucide-react";
 import Link from "next/link";
 import { ItemConta } from "../components/itemConta";
 import { useQuery } from "@tanstack/react-query";
 import { fetchApi } from "@/lib/fetchWrap";
 import { conta } from "../../accounts/components/accountsList";
 import { Skeleton } from "@/components/ui/skeleton";
+import { TransactionForm } from "../page";
 
 export const getContas = async () => {
   let { listaContas } = await fetchApi<{ listaContas: conta[] }>(
@@ -18,10 +17,12 @@ export const getContas = async () => {
   return listaContas;
 };
 
-const StepConta = () => {
-  const { handleNext, handleFormInput, form } = useContext(NewContext);
-  const { tipo } = form;
+type StepContaProps = {
+  handleNext: (inputs: Partial<TransactionForm>) => void;
+  tipo: string;
+};
 
+const StepConta = ({ handleNext, tipo }: StepContaProps) => {
   const { data, isLoading, isError, error } = useQuery<conta[]>({
     queryKey: ["contas"],
     queryFn: getContas,
@@ -32,9 +33,7 @@ const StepConta = () => {
   }
 
   const handleInput = (value: number) => {
-    handleFormInput({ chave: "conta", valor: value });
-
-    handleNext();
+    handleNext({ conta: value });
   };
 
   return (
@@ -55,7 +54,7 @@ const StepConta = () => {
         )}
 
         {data?.map((conta) => {
-          if (form.tipo == "Receita" && conta.tipo == "Crédito") {
+          if (tipo == "Receita" && conta.tipo == "Crédito") {
             return;
           }
 

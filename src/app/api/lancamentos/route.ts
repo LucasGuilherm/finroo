@@ -1,4 +1,5 @@
 import { FormInputs } from "@/app/(auth)/newTransaction/NewContext";
+import { TransactionForm } from "@/app/(auth)/newTransaction/page";
 import { authOptions } from "@/lib/auth";
 import { atualizarSaldoConta } from "@/lib/dbActions/contas";
 import { createLancamento } from "@/lib/lancamentos";
@@ -9,11 +10,11 @@ export const POST = async (request: Request) => {
   const session = await getServerSession(authOptions);
   const userId = Number(session?.user.id);
 
-  const data: FormInputs = await request.json();
+  const data: TransactionForm = await request.json();
 
   const lancamento = await createLancamento({ ...data, userId });
 
-  const saldoConta = await atualizarSaldoConta({
+  await atualizarSaldoConta({
     contaId: data.conta,
     userId,
   });

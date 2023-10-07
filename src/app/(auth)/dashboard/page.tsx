@@ -6,21 +6,24 @@ import BtnsNew from "./components/btnsNew";
 import { MinhasContas } from "./components/minhasContas";
 import SaldoTotal from "./components/saldoTotal";
 import Link from "next/link";
+import DespesasPendentes from "./components/despesasPendentes";
 
 const Dashboard = () => {
   return (
     <>
-      <div className="flex flex-row justify-between items-center">
+      {/* <div className="flex flex-row justify-between items-center">
         <UserHeader />
         <div className="flex flex-row bg-zinc-100 py-1 px-4 rounded-full justify-between gap-2">
           <span>3</span>
           <Bell />
         </div>
-      </div>
+      </div> */}
 
       <SaldoTotal />
 
       <BtnsNew />
+
+      <DespesasPendentes />
 
       <Link
         className="bg-zinc-100 shadow hover:bg-slate-200 justify-between items-center py-5 px-4 rounded-xl flex"

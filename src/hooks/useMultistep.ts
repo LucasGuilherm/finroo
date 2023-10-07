@@ -21,7 +21,7 @@ export const useMultistep = (elements: ReactElement[]) => {
     back,
     next,
     steps: elements,
-    isFirst: step === 1,
-    isLast: step === elements.length - 1,
+    isFirst: step == 0,
+    isLast: step == elements.length - 1,
   };
 };

@@ -5,20 +5,27 @@ import { NewContext } from "../NewContext";
 import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { TransactionForm } from "../page";
 
-const StepDescricao = () => {
-  const { handleNext, handleFormInput, form, corDestaque } =
-    useContext(NewContext);
+type StepDescricaoProps = {
+  handleNext: (inputs: Partial<TransactionForm>) => void;
+  tipo: string;
+  corDestaque: "receita" | "despesa";
+};
+
+const StepDescricao = ({
+  handleNext,
+  tipo,
+  corDestaque,
+}: StepDescricaoProps) => {
   const inputRef = useRef<any>();
-
-  const { tipo } = form;
 
   const handleInput = () => {
     if (!inputRef.current.value) return;
 
-    handleFormInput({ chave: "descricao", valor: inputRef.current.value });
-
-    handleNext();
+    handleNext({
+      descricao: inputRef.current.value,
+    });
   };
 
   return (

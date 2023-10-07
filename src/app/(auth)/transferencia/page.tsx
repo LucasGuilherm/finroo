@@ -2,10 +2,10 @@
 
 import { useEffect, useState } from "react";
 import StepValorTransferencia from "./components/valorInput";
-import { useMultistep } from "./useMultistep";
 import ContaInput from "./components/contaInput";
 import ConfirmacaoTransferencia from "./components/confirmacao";
 import { useSearchParams } from "next/navigation";
+import { useMultistep } from "@/hooks/useMultistep";
 
 export type dadosForm = {
   valor: number;

@@ -10,7 +10,7 @@ const SaldoTotal = async () => {
   const saldoMask = mascaraMoeda(saldo);
 
   return (
-    <div className="flex flex-col items-center my-4">
+    <div className="flex flex-col items-center">
       <span className="text-lg">Saldo</span>
       <span className="text-4xl font-medium">
         <span className="text-3xl">R$ </span>

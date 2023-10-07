@@ -1,7 +1,6 @@
 "use client";
 
-import { useContext, useState } from "react";
-import { NewContext } from "../NewContext";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Book,
@@ -21,11 +20,11 @@ import {
   Soup,
   Wrench,
 } from "lucide-react";
-import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
 import { fetchApi } from "@/lib/fetchWrap";
 import Loading from "../../loading";
 import { ItemCategoria } from "../components/itemCategoria";
+import { TransactionForm } from "../page";
 
 export type categoria = {
   id: number;
@@ -37,11 +36,18 @@ const getCategorias = async () => {
   return await fetchApi<categoria[]>("/categorias");
 };
 
-const StepCategoria = () => {
-  const { handleNext, handleFormInput, form, corDestaque } =
-    useContext(NewContext);
+type StepCategoriaProps = {
+  handleNext: (inputs: Partial<TransactionForm>) => void;
+  tipo: string;
+  corDestaque: "receita" | "despesa";
+};
+
+const StepCategoria = ({
+  corDestaque,
+  tipo,
+  handleNext,
+}: StepCategoriaProps) => {
   const [selected, setSelected] = useState(0);
-  const { tipo } = form;
 
   const { data: categorias } = useQuery({
     queryKey: ["categorias"],
@@ -59,8 +65,9 @@ const StepCategoria = () => {
   const handleInput = () => {
     if (!selected) return;
 
-    handleFormInput({ chave: "categoria", valor: selected });
-    handleNext();
+    handleNext({
+      categoria: selected,
+    });
   };
 
   return (

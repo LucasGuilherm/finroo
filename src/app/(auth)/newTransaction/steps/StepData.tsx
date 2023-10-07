@@ -7,9 +7,14 @@ import { format, subDays } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { TransactionForm } from "../page";
 
-const SteData = () => {
-  const { handleNext, corDestaque, handleFormInput } = useContext(NewContext);
+type StepDataProps = {
+  handleNext: (inputs: Partial<TransactionForm>) => void;
+  corDestaque: "receita" | "despesa";
+};
+
+const SteData = ({ handleNext, corDestaque }: StepDataProps) => {
   const [shortCut, setShortcut] = useState<"ontem" | "hoje" | "">("hoje");
   const inputRef = useRef<any>();
 
@@ -29,11 +34,11 @@ const SteData = () => {
   const handleInput = () => {
     if (!inputRef.current.value) return;
 
-    const data = new Date(inputRef.current.value);
+    const data = new Date(inputRef.current.value).toISOString();
 
-    handleFormInput({ chave: "data", valor: data });
-
-    handleNext();
+    handleNext({
+      data: data,
+    });
   };
 
   return (

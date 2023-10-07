@@ -1,13 +1,13 @@
 "use client";
 
 import { PencilIcon, X } from "lucide-react";
-import { useContext, useEffect, useState } from "react";
-import { FormInputs, NewContext } from "../NewContext";
+import { useEffect, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { fetchApi } from "@/lib/fetchWrap";
+import { TransactionForm } from "../page";
 
-const postLancamento = async (lancamento: FormInputs) => {
+const postLancamento = async (lancamento: TransactionForm) => {
   const data = await fetchApi("/lancamentos", {
     method: "POST",
     body: JSON.stringify(lancamento),
@@ -16,13 +16,16 @@ const postLancamento = async (lancamento: FormInputs) => {
   return data;
 };
 
-const StepConcluido = () => {
-  const { form } = useContext(NewContext);
+type StepConcluidoProps = {
+  form: TransactionForm;
+};
+
+const StepConcluido = ({ form }: StepConcluidoProps) => {
   const router = useRouter();
   const [error, setError] = useState("");
 
   const mutation = useMutation({
-    mutationFn: (data: FormInputs) => postLancamento(data),
+    mutationFn: (data: TransactionForm) => postLancamento(data),
     onError: (e) => {
       setError(`Falha ao registrar ${form.tipo.toLowerCase()}`);
     },

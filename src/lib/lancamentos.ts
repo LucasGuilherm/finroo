@@ -1,3 +1,4 @@
+import { TransactionForm } from "@/app/(auth)/newTransaction/page";
 import {
   atualizarSaldoConta,
   getContaById,
@@ -21,13 +22,7 @@ export const getLancamentos = async () => {
   }
 };
 
-type createLancamento = {
-  conta: number;
-  valor: number;
-  descricao: string;
-  data: string | "";
-  categoria: number;
-  tipo: "Receita" | "Despesa" | "Transferencia";
+type createLancamento = TransactionForm & {
   userId: number;
 };
 
@@ -200,6 +195,7 @@ export const transferirSaldo = async ({
     tipo: "Transferencia",
     userId,
     valor: -Math.abs(valor),
+    pago: true,
   });
 
   if (!saida) {
@@ -214,6 +210,7 @@ export const transferirSaldo = async ({
     tipo: "Transferencia",
     userId,
     valor: Math.abs(valor),
+    pago: true,
   });
 
   if (!entrada) {

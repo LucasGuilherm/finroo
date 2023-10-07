@@ -36,7 +36,7 @@ const UserHeader = () => {
                 src="/profile.jpg"
               />
             </div>
-            <h1 className="font-medium text-base">Olá, {userName}</h1>
+            {/* <h1 className="font-medium text-base">Olá, {userName}</h1> */}
           </div>
         </SheetTrigger>
         <SheetContent side={"left"}>
