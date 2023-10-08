@@ -9,6 +9,8 @@ import Link from "next/link";
 import SecaoPendentes from "./components/despesasPendentes";
 import MinhasContas from "./components/minhasContas";
 
+export const revalidate = 0;
+
 const Dashboard = () => {
   return (
     <>

@@ -2,6 +2,8 @@ import { saldoTotal } from "@/lib/lancamentos";
 import { mascaraMoeda } from "@/lib/utils";
 import { getServerSession } from "next-auth";
 
+export const dynamic = "force-dynamic";
+
 const SaldoTotal = async () => {
   const session = await getServerSession();
 
