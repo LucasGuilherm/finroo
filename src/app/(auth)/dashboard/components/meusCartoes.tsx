@@ -56,6 +56,7 @@ export const MeusCartoes = async () => {
         {contasComTotal.map((conta) => {
           return (
             <CardConta
+              key={conta.id}
               name={conta.conta}
               valor={conta.somatorioLancamentos}
               conta={conta.id}

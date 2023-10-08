@@ -16,7 +16,9 @@ export default async function RootLayout({
   return (
     <SessionProvider session={session}>
       <CheckErrorSession>
-        <main className="bg-zinc-100 overflow-auto">{children}</main>
+        <main className="bg-pink-100 min-h-screen overflow-auto">
+          {children}
+        </main>
       </CheckErrorSession>
     </SessionProvider>
   );

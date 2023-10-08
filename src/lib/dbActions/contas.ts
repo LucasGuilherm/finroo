@@ -77,6 +77,7 @@ export const getContaSaldo = async ({ contaId, userId }: getContaSaldo) => {
     where: {
       userId: userId,
       contaId: contaId,
+      pago: true,
     },
     _sum: {
       valor: true,

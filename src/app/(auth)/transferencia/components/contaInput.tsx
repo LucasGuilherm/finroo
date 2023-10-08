@@ -26,7 +26,7 @@ const ContaInput = ({ onClick, contaSaida }: props) => {
   });
 
   if (isError) {
-    console.log(error);
+    console.error(error);
   }
 
   const handleInput = (id: number) => {

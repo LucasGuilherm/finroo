@@ -33,7 +33,7 @@ const AccountsList = () => {
           <Link
             key={conta.id}
             href={`./accounts/${conta.id}`}
-            className="bg-slate-200 flex flex-row gap-3 p-4 rounded-lg"
+            className="bg-white flex flex-row gap-3 p-4 rounded-lg shadow"
           >
             <CreditCard size={24} />
             <span className="font-medium">{conta.conta}</span>

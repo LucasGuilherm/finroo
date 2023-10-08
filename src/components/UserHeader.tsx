@@ -23,8 +23,7 @@ const UserHeader = () => {
     <>
       <Sheet>
         <SheetTrigger>
-          {" "}
-          <div className="flex flex-row items-center gap-4">
+          <div className="flex flex-row items-center gap-4 justify-end">
             <div className="relative w-9 h-9 rounded-full overflow-hidden">
               <Image
                 layout="fill"

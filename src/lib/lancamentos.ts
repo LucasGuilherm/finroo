@@ -5,7 +5,14 @@ import {
   getContaSaldo,
 } from "./dbActions/contas";
 import prisma from "./prisma";
-import { format, lastDayOfMonth } from "date-fns";
+import {
+  endOfMonth,
+  format,
+  lastDayOfMonth,
+  startOfMonth,
+  sub,
+  subHours,
+} from "date-fns";
 
 export const getLancamentos = async () => {
   try {
@@ -27,7 +34,8 @@ type createLancamento = TransactionForm & {
 };
 
 export const createLancamento = async (dados: createLancamento) => {
-  const { tipo, valor, descricao, conta, data, categoria, userId } = dados;
+  const { tipo, valor, descricao, conta, data, categoria, userId, pago } =
+    dados;
 
   const lancamento = await prisma.lancamentos.create({
     data: {
@@ -38,31 +46,29 @@ export const createLancamento = async (dados: createLancamento) => {
       contaId: conta,
       categoriaId: categoria,
       userId: userId,
+      pago: pago,
     },
   });
   return lancamento;
 };
 
 export const saldoTotal = async (userId: number) => {
-  const saldo = await prisma.lancamentos.groupBy({
-    by: ["userId"],
+  const contasSaldo = await prisma.contas.aggregate({
     where: {
-      conta: {
-        tipo: {
-          in: ["Dinheiro", "Débito"],
-        },
+      tipo: {
+        in: ["Dinheiro", "Débito"],
       },
     },
     _sum: {
-      valor: true,
+      saldo: true,
     },
   });
 
-  if (!saldo.length) {
+  if (!contasSaldo._sum) {
     return 0;
   }
 
-  return Number(saldo[0]._sum.valor || 0);
+  return Number(contasSaldo._sum.saldo || 0);
 };
 
 export const totalDespesasMes = async (userId: number) => {
@@ -76,6 +82,7 @@ export const totalDespesasMes = async (userId: number) => {
         equals: "Despesa",
       },
       userId: userId,
+      pago: true,
       data: {
         gte: new Date(firstDateOfMonth),
         lte: new Date(lastDateOfMonth),
@@ -100,6 +107,7 @@ export const totalReceitasMes = async (userId: number) => {
         equals: "Receita",
       },
       userId: userId,
+      pago: true,
       data: {
         gte: new Date(firstDateOfMonth),
         lte: new Date(lastDateOfMonth),
@@ -227,4 +235,83 @@ export const transferirSaldo = async ({
   ]);
 
   return { success: true };
+};
+
+export const totalPendente = async () => {
+  const dataIni = new Date(startOfMonth(new Date()).setUTCHours(0));
+  const dataFim = subHours(new Date(endOfMonth(new Date())), 3);
+
+  const pendente = await prisma.lancamentos.groupBy({
+    by: ["tipo"],
+    where: {
+      tipo: {
+        in: ["Despesa", "Receita"],
+      },
+      // data: {
+      //   gte: dataIni,
+      //   lte: dataFim,
+      // },
+      pago: false,
+    },
+    _sum: {
+      valor: true,
+    },
+  });
+
+  return pendente;
+};
+
+export const getLancamentosPendentes = async <T = unknown>({
+  tipo,
+}: {
+  tipo: "Receita" | "Despesa";
+}) => {
+  const dataIni = new Date(startOfMonth(new Date()).setUTCHours(0));
+  const dataFim = subHours(new Date(endOfMonth(new Date())), 3);
+
+  const lancamentosPendentes = await prisma.lancamentos.findMany({
+    where: {
+      pago: false,
+      data: {
+        gte: dataIni,
+        lte: dataFim,
+      },
+      tipo: tipo,
+    },
+  });
+
+  return lancamentosPendentes as T;
+};
+
+type setLancamentoPago = {
+  id: number;
+  pago: boolean;
+  userId: number;
+};
+
+export const setLancamentoPago = async ({
+  id,
+  pago,
+  userId,
+}: setLancamentoPago) => {
+  const today = new Date().toISOString();
+
+  const lancamento = await prisma.lancamentos.update({
+    data: {
+      pago: pago,
+      data: today,
+    },
+    where: {
+      id: id,
+    },
+  });
+
+  if (lancamento) {
+    await atualizarSaldoConta({
+      contaId: lancamento.contaId,
+      userId,
+    });
+  }
+
+  return lancamento;
 };

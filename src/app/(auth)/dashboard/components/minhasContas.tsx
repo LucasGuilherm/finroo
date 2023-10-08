@@ -7,7 +7,9 @@ const MinhasContas = () => {
       className="bg-white shadow hover:bg-slate-200 justify-between items-center py-5 px-4 rounded-xl flex"
       href={"/accounts"}
     >
-      <span className="font-medium text-black text-base">Minhas contas</span>
+      <span className="font-medium text-black text-base">
+        Minhas contas e cartões
+      </span>
       <ArrowRight />
     </Link>
   );

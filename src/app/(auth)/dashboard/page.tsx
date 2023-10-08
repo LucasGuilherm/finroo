@@ -6,7 +6,7 @@ import BtnsNew from "./components/btnsNew";
 import { MeusCartoes } from "./components/meusCartoes";
 import SaldoTotal from "./components/saldoTotal";
 import Link from "next/link";
-import SessaoPendentes from "./components/despesasPendentes";
+import SecaoPendentes from "./components/despesasPendentes";
 import MinhasContas from "./components/minhasContas";
 
 const Dashboard = () => {
@@ -23,7 +23,7 @@ const Dashboard = () => {
       </section>
 
       <section className="flex flex-col gap-6 p-4">
-        <SessaoPendentes />
+        <SecaoPendentes />
 
         <MinhasContas />
 

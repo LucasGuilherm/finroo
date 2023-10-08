@@ -56,7 +56,7 @@ const StepValor = ({ handleNext, tipo, corDestaque }: StepValorProps) => {
           inputMode="numeric"
           value={input}
           onChange={(value) => handleInput(value.target.value)}
-          className="border-0 font-medium text-4xl focus-visible:ring-0 focus-visible:ring-offset-0 px-0 my-2"
+          className="bg-transparent border-0 font-medium text-4xl focus-visible:ring-0 focus-visible:ring-offset-0 px-0 my-2"
           placeholder="R$ 0,00"
         />
       </div>
