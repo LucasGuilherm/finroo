@@ -1,4 +1,5 @@
 import { getLancamentosPendentes } from "@/lib/lancamentos";
+import { Prisma } from "@prisma/client";
 
 import ListaPendentes from "./components/lista";
 
@@ -18,9 +19,13 @@ const Pententes = async ({ searchParams }: PententesProps) => {
   const { tipo } = searchParams;
   const titulo = tipo == "Despesa" ? "Pagar" : "Receber";
 
-  const listaPendentes = await getLancamentosPendentes<itemPendente[]>({
+  let listaPendentes = await getLancamentosPendentes<itemPendente[]>({
     tipo,
   });
+
+  for (const iterator of listaPendentes) {
+    iterator.valor = Number(iterator.valor);
+  }
 
   return (
     <>

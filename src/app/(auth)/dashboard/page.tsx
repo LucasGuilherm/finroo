@@ -1,11 +1,8 @@
 import { UserHeader } from "@/components";
 import ResumoTotal from "./components/resumoTotal";
-import { Separator } from "@/components/ui/separator";
-import { ArrowRight, Bell } from "lucide-react";
 import BtnsNew from "./components/btnsNew";
 import { MeusCartoes } from "./components/meusCartoes";
 import SaldoTotal from "./components/saldoTotal";
-import Link from "next/link";
 import SecaoPendentes from "./components/despesasPendentes";
 import MinhasContas from "./components/minhasContas";
 

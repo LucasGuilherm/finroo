@@ -270,6 +270,13 @@ export const getLancamentosPendentes = async <T = unknown>({
   const dataFim = subHours(new Date(endOfMonth(new Date())), 3);
 
   const lancamentosPendentes = await prisma.lancamentos.findMany({
+    select: {
+      data: true,
+      descricao: true,
+      tipo: true,
+      valor: true,
+      id: true,
+    },
     where: {
       pago: false,
       data: {
