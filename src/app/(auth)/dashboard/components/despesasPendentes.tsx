@@ -1,7 +1,9 @@
+import { authOptions } from "@/lib/auth";
 import { totalPendente } from "@/lib/lancamentos";
 import { cn, mascaraMoeda } from "@/lib/utils";
 import { cva, VariantProps } from "class-variance-authority";
 import { ArrowRight } from "lucide-react";
+import { getServerSession } from "next-auth";
 import Link from "next/link";
 
 const card = cva(
@@ -36,7 +38,9 @@ const CardPendente = ({ valor, tipo, variant }: CardPendente) => {
 };
 
 const SecaoPendentes = async () => {
-  const pendente = await totalPendente();
+  const session = await getServerSession(authOptions);
+
+  const pendente = await totalPendente({ userId: Number(session?.user.id) });
 
   if (!pendente.length) {
     return (

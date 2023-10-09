@@ -1,7 +1,7 @@
 import { getLancamentosPendentes } from "@/lib/lancamentos";
-import { Prisma } from "@prisma/client";
-
 import ListaPendentes from "./components/lista";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 type PententesProps = {
   searchParams: { tipo: "Despesa" | "Receita" };
@@ -16,11 +16,14 @@ export type itemPendente = {
 };
 
 const Pententes = async ({ searchParams }: PententesProps) => {
+  const session = await getServerSession(authOptions);
+
   const { tipo } = searchParams;
   const titulo = tipo == "Despesa" ? "Pagar" : "Receber";
 
   let listaPendentes = await getLancamentosPendentes<itemPendente[]>({
     tipo,
+    userId: Number(session?.user.id),
   });
 
   for (const iterator of listaPendentes) {

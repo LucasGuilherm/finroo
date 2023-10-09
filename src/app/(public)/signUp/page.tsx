@@ -15,6 +15,7 @@ import { cn } from "@/lib/utils";
 import { useMutation } from "@tanstack/react-query";
 import IsLoading from "./components/isLoading";
 import { useRouter } from "next/navigation";
+import { fetchApi } from "@/lib/fetchWrap";
 
 type formType = {
   email: string;
@@ -23,21 +24,26 @@ type formType = {
 };
 
 const postNewAccount = async (accountInfo: formType) => {
-  const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user`, {
+  console.log(accountInfo);
+
+  // const data = await fetchApi(`/teste`);
+
+  const data = await fetchApi(`/user`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
     body: JSON.stringify(accountInfo),
   });
 
-  if (!data.ok) {
-    const error = await data.json();
+  console.log(data);
 
-    throw new Error(error.message);
-  }
+  // if (!data.ok) {
+  //   const error = await data.json();
 
-  return await data.json();
+  //   console.log("teste123");
+
+  //   // throw new Error(error.message);
+  // }
+
+  return await data;
 };
 
 const loginSchema: z.ZodType<formType> = z

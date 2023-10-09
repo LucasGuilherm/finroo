@@ -1,12 +1,17 @@
+import { authOptions } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { mascaraMoeda } from "@/lib/utils";
 import { sub, startOfDay, endOfDay, endOfToday } from "date-fns";
+import { getServerSession } from "next-auth";
 import Link from "next/link";
 
 export const MeusCartoes = async () => {
+  const session = await getServerSession(authOptions);
+
   const contasCredito = await prisma.contas.findMany({
     where: {
       tipo: "Crédito",
+      userId: Number(session?.user.id),
     },
   });
 
@@ -25,6 +30,7 @@ export const MeusCartoes = async () => {
 
       const lancamentos = await prisma.lancamentos.findMany({
         where: {
+          userId: Number(session?.user.id),
           contaId: conta.id,
           data: {
             lte: today,
@@ -45,7 +51,7 @@ export const MeusCartoes = async () => {
     })
   );
 
-  if (!contasComTotal) {
+  if (!contasComTotal.length) {
     return false;
   }
 

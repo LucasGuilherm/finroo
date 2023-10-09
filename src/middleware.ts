@@ -8,5 +8,5 @@ export { default } from "next-auth/middleware";
 // });
 
 export const config = {
-  matcher: ["/((?!signUp|signIn|$).*)"],
+  matcher: ["/((?!signUp|signIn|api/teste|api/user|$).*)"],
 };

@@ -4,10 +4,6 @@ import { hash } from "bcrypt";
 import * as z from "zod";
 
 const userValidationSchema = z.object({
-  // username: z
-  //   .string()
-  //   .min(3, "Nome deve ter pelo menos 3 characteres")
-  //   .max(70, "Nome deve ter no máximo 70 characteres"),
   email: z.string().email("Email inválido"),
   password: z
     .string()

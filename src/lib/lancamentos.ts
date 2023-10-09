@@ -58,6 +58,7 @@ export const saldoTotal = async (userId: number) => {
       tipo: {
         in: ["Dinheiro", "Débito"],
       },
+      userId: userId,
     },
     _sum: {
       saldo: true,
@@ -225,11 +226,12 @@ export const transferirSaldo = async ({
     await prisma.lancamentos.delete({
       where: {
         id: saida.id,
+        userId: userId,
       },
     });
   }
 
-  const [saldoEntrada, saldoSaida] = await Promise.all([
+  await Promise.all([
     atualizarSaldoConta({ contaId: contaEntrada, userId }),
     atualizarSaldoConta({ contaId: contaSaida, userId }),
   ]);
@@ -237,7 +239,7 @@ export const transferirSaldo = async ({
   return { success: true };
 };
 
-export const totalPendente = async () => {
+export const totalPendente = async ({ userId }: { userId: number }) => {
   const dataIni = new Date(startOfMonth(new Date()).setUTCHours(0));
   const dataFim = subHours(new Date(endOfMonth(new Date())), 3);
 
@@ -247,6 +249,7 @@ export const totalPendente = async () => {
       tipo: {
         in: ["Despesa", "Receita"],
       },
+      userId,
       // data: {
       //   gte: dataIni,
       //   lte: dataFim,
@@ -263,8 +266,10 @@ export const totalPendente = async () => {
 
 export const getLancamentosPendentes = async <T = unknown>({
   tipo,
+  userId,
 }: {
   tipo: "Receita" | "Despesa";
+  userId: number;
 }) => {
   const dataIni = new Date(startOfMonth(new Date()).setUTCHours(0));
   const dataFim = subHours(new Date(endOfMonth(new Date())), 3);
@@ -284,6 +289,7 @@ export const getLancamentosPendentes = async <T = unknown>({
         lte: dataFim,
       },
       tipo: tipo,
+      userId: userId,
     },
   });
 
