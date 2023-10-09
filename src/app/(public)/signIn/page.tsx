@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { cn } from "@/lib/utils";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 import { useState } from "react";
 import IsLoading from "../signUp/components/isLoading";
 
@@ -42,17 +42,21 @@ const SignIn = () => {
   const handleLogin = async (data: formType) => {
     setLoading(true);
 
-    const signInData = await signIn("credentials", {
-      email: data.email,
-      password: data.password,
-      redirect: false,
-    });
+    try {
+      const signInData = await signIn("credentials", {
+        email: data.email,
+        password: data.password,
+        redirect: false,
+      });
 
-    if (signInData?.error) {
-      console.error(signInData.error);
-      setLoading(false);
-    } else {
-      router.push("/dashboard");
+      if (signInData?.error) {
+        console.error(signInData.error);
+        setLoading(false);
+      } else {
+        router.replace("/dashboard");
+      }
+    } catch (e) {
+      console.log(e);
     }
   };
 

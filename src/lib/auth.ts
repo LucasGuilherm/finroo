@@ -37,7 +37,9 @@ export const authOptions: NextAuthOptions = {
           existingUser.password
         );
 
-        if (!checkPassword) return null;
+        if (!checkPassword) {
+          throw new Error("invalid credentials");
+        }
 
         return {
           id: `${existingUser.id}`,

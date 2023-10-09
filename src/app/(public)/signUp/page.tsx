@@ -24,24 +24,10 @@ type formType = {
 };
 
 const postNewAccount = async (accountInfo: formType) => {
-  console.log(accountInfo);
-
-  // const data = await fetchApi(`/teste`);
-
   const data = await fetchApi(`/user`, {
     method: "POST",
     body: JSON.stringify(accountInfo),
   });
-
-  console.log(data);
-
-  // if (!data.ok) {
-  //   const error = await data.json();
-
-  //   console.log("teste123");
-
-  //   // throw new Error(error.message);
-  // }
 
   return await data;
 };
