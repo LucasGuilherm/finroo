@@ -8,64 +8,76 @@ import Link from "next/link";
 export const MeusCartoes = async () => {
   const session = await getServerSession(authOptions);
 
-  const contasCredito = await prisma.contas.findMany({
+  const cartoesCredito = await prisma.cartoes.findMany({
     where: {
-      tipo: "Crédito",
       userId: Number(session?.user.id),
+    },
+    include: {
+      Fatura: {
+        where: {
+          dataFechamento: {
+            gt: new Date(),
+          },
+        },
+        take: 1,
+        orderBy: {
+          dataFechamento: "asc",
+        },
+      },
     },
   });
 
-  const contasComTotal = await Promise.all(
-    contasCredito.map(async (conta) => {
-      const diaFechamento = conta.fechamento || 1;
+  // const cartoesComTotal = await Promise.all(
+  //   cartoesCredito.map(async (cartao) => {
+  //     const diaFechamento = cartao.diaFechamento || 1;
 
-      const today = new Date(
-        new Date(new Date().setUTCHours(23, 59, 59, 999)).toISOString()
-      );
-      const fechamento = sub(new Date().setUTCDate(diaFechamento), {
-        months: 1,
-      });
+  //     const today = new Date(
+  //       new Date(new Date().setUTCHours(23, 59, 59, 999)).toISOString()
+  //     );
+  //     const fechamento = sub(new Date().setUTCDate(diaFechamento), {
+  //       months: 1,
+  //     });
 
-      fechamento.setUTCHours(0, 0, 0, 0);
+  //     fechamento.setUTCHours(0, 0, 0, 0);
 
-      const lancamentos = await prisma.lancamentos.findMany({
-        where: {
-          userId: Number(session?.user.id),
-          contaId: conta.id,
-          data: {
-            lte: today,
-            gte: fechamento,
-          },
-        },
-      });
+  //     const lancamentos = await prisma.lancamentos.findMany({
+  //       where: {
+  //         userId: Number(session?.user.id),
+  //         cartaoId: cartao.id,
+  //         data: {
+  //           gte: fechamento,
+  //           lte: today,
+  //         },
+  //       },
+  //     });
 
-      const somatorioLancamentos = lancamentos.reduce(
-        (total, lancamento) => total + Number(lancamento.valor),
-        0
-      );
+  //     const somatorioLancamentos = lancamentos.reduce(
+  //       (total, lancamento) => total + Number(lancamento.valor),
+  //       0
+  //     );
 
-      return {
-        ...conta,
-        somatorioLancamentos,
-      };
-    })
-  );
+  //     return {
+  //       ...cartao,
+  //       somatorioLancamentos,
+  //     };
+  //   })
+  // );
 
-  if (!contasComTotal.length) {
-    return false;
-  }
+  // if (!cartoesComTotal.length) {
+  //   return false;
+  // }
 
   return (
     <div className="flex flex-col">
       <span className="text-xl font-medium">Cartões de crédito</span>
-      <div className="flex flex-row gap-3 overflow-x-scroll py-4 ">
-        {contasComTotal.map((conta) => {
+      <div className="flex flex-row gap-3 overflow-x-scroll py-4 no-scrollbar">
+        {cartoesCredito.map((cartao) => {
           return (
-            <CardConta
-              key={conta.id}
-              name={conta.conta}
-              valor={conta.somatorioLancamentos}
-              conta={conta.id}
+            <CardCartao
+              key={cartao.id}
+              name={cartao.nome}
+              valor={Number(cartao.Fatura[0].valorTotal)}
+              conta={cartao.id}
             />
           );
         })}
@@ -80,10 +92,13 @@ type Cartao = {
   conta: number;
 };
 
-const CardConta = ({ name, valor, conta }: Cartao) => {
+const CardCartao = ({ name, valor, conta }: Cartao) => {
   return (
     <Link
-      href={`accounts/${conta}`}
+      href={{
+        pathname: `accounts/cartoes/${conta}`,
+        query: { tipo: "cartao" },
+      }}
       className="bg-white p-4 rounded-xl w-3/5 shrink-0 flex flex-col gap-2 shadow"
     >
       <span className="text-lg font-medium">{name}</span>

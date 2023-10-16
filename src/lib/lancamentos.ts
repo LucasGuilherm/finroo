@@ -6,6 +6,7 @@ import {
 } from "./dbActions/contas";
 import prisma from "./prisma";
 import {
+  addMonths,
   endOfMonth,
   format,
   lastDayOfMonth,
@@ -13,6 +14,7 @@ import {
   sub,
   subHours,
 } from "date-fns";
+import { atualizarFaturaCartao } from "./dbActions/cartoes";
 
 export const getLancamentos = async () => {
   try {
@@ -34,11 +36,33 @@ type createLancamento = TransactionForm & {
 };
 
 export const createLancamento = async (dados: createLancamento) => {
-  const { tipo, valor, descricao, conta, data, categoria, userId, pago } =
-    dados;
+  let {
+    tipo,
+    valor,
+    descricao,
+    conta,
+    data,
+    categoria,
+    userId,
+    pago,
+    cartao,
+    vezes,
+  } = dados;
 
-  const lancamento = await prisma.lancamentos.create({
-    data: {
+  const listaLancamento = [];
+
+  if (cartao) {
+    valor = valor / vezes;
+  }
+
+  for (let index = 0; index < vezes; index++) {
+    if (index > 0) {
+      pago = false;
+    }
+
+    data = addMonths(new Date(data), index);
+
+    listaLancamento.push({
       descricao,
       tipo,
       valor: tipo == "Despesa" ? valor * -1 : valor,
@@ -47,8 +71,31 @@ export const createLancamento = async (dados: createLancamento) => {
       categoriaId: categoria,
       userId: userId,
       pago: pago,
-    },
+      cartaoId: cartao,
+    });
+  }
+
+  const lancamento = await prisma.lancamentos.createMany({
+    data: listaLancamento,
   });
+
+  if (cartao) {
+    listaLancamento.forEach(async (item) => {
+      await atualizarFaturaCartao({
+        cartaoId: item.cartaoId,
+        userId,
+        dataReferencia: new Date(item.data),
+      });
+    });
+  }
+
+  if (conta) {
+    await atualizarSaldoConta({
+      contaId: conta,
+      userId,
+    });
+  }
+
   return lancamento;
 };
 
@@ -196,39 +243,35 @@ export const transferirSaldo = async ({
     getContaById({ contaId: contaEntrada, userId }),
   ]);
 
-  const saida = await createLancamento({
-    categoria: 4,
-    conta: contaSaida,
-    data: new Date().toISOString(),
-    descricao: `Transferencia para ${infoContaEntrada?.conta}`,
-    tipo: "Transferencia",
-    userId,
-    valor: -Math.abs(valor),
-    pago: true,
-  });
-
-  if (!saida) {
-    return { erro: "Falha ao realizar transferencia, tente novamente." };
-  }
-
-  const entrada = await createLancamento({
-    categoria: 4,
-    conta: contaEntrada,
-    data: new Date().toISOString(),
-    descricao: `Transferencia de ${infoContaSaida?.conta}`,
-    tipo: "Transferencia",
-    userId,
-    valor: Math.abs(valor),
-    pago: true,
-  });
-
-  if (!entrada) {
-    await prisma.lancamentos.delete({
-      where: {
-        id: saida.id,
-        userId: userId,
+  const transferencia = await prisma.lancamentos.createMany({
+    data: [
+      {
+        categoriaId: 4,
+        contaId: contaSaida,
+        data: new Date(),
+        descricao: `Transferencia para ${infoContaEntrada?.conta}`,
+        tipo: "Transferencia",
+        userId,
+        valor: -Math.abs(valor),
+        pago: true,
+        cartaoId: 0,
       },
-    });
+      {
+        categoriaId: 4,
+        contaId: contaEntrada,
+        data: new Date(),
+        descricao: `Transferencia de ${infoContaSaida?.conta}`,
+        tipo: "Transferencia",
+        userId,
+        valor: Math.abs(valor),
+        pago: true,
+        cartaoId: 0,
+      },
+    ],
+  });
+
+  if (!transferencia.count) {
+    return { erro: "Falha ao realizar transferencia, tente novamente." };
   }
 
   await Promise.all([
@@ -272,7 +315,7 @@ export const getLancamentosPendentes = async <T = unknown>({
   userId: number;
 }) => {
   const dataIni = new Date(startOfMonth(new Date()).setUTCHours(0));
-  const dataFim = subHours(new Date(endOfMonth(new Date())), 3);
+  // const dataFim = subHours(new Date(endOfMonth(new Date())), 3);
 
   const lancamentosPendentes = await prisma.lancamentos.findMany({
     select: {
@@ -286,7 +329,7 @@ export const getLancamentosPendentes = async <T = unknown>({
       pago: false,
       data: {
         gte: dataIni,
-        lte: dataFim,
+        // lte: dataFim,
       },
       tipo: tipo,
       userId: userId,
@@ -319,7 +362,7 @@ export const setLancamentoPago = async ({
     },
   });
 
-  if (lancamento) {
+  if (lancamento && lancamento.contaId) {
     await atualizarSaldoConta({
       contaId: lancamento.contaId,
       userId,

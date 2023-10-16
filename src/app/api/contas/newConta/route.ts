@@ -1,9 +1,8 @@
-import { FormInputs } from "@/app/(auth)/newAccount/NewContext";
+import { ContaForm } from "@/app/(auth)/newAccount/page";
 import { authOptions } from "@/lib/auth";
 import { createContaUser, getContaByNameAndUser } from "@/lib/dbActions/contas";
 import { createLancamento } from "@/lib/lancamentos";
 import { getServerSession } from "next-auth";
-import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
 export const POST = async (req: Request) => {
@@ -14,11 +13,10 @@ export const POST = async (req: Request) => {
     return NextResponse.json({ message: "Error" });
   }
 
-  const { descricao, tipo, fechamento, saldoInicial, vencimento }: FormInputs =
-    await req.json();
+  const { nome, tipo, saldoInicial }: ContaForm = await req.json();
 
   const contaExiste = await getContaByNameAndUser({
-    conta: descricao,
+    conta: nome,
     userId: userId,
   });
 
@@ -27,23 +25,23 @@ export const POST = async (req: Request) => {
   }
 
   const novaConta = await createContaUser({
-    conta: descricao,
+    conta: nome,
     userId,
     tipo,
-    fechamento,
-    vencimento,
   });
 
-  if (tipo !== "Crédito") {
-    const saldoInicialConta = await createLancamento({
+  if (saldoInicial) {
+    await createLancamento({
       categoria: 4,
       conta: novaConta.id,
-      data: new Date().toISOString(),
+      data: new Date(),
       descricao: "Saldo Inicial",
       tipo: "Receita",
       userId: userId,
       valor: Number(saldoInicial),
       pago: true,
+      cartao: 0,
+      vezes: 1,
     });
   }
 

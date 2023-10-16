@@ -14,10 +14,12 @@ import { useEffect, useState } from "react";
 export type TransactionForm = {
   categoria: number;
   conta: number;
-  data: string;
+  cartao: number;
+  data: Date;
   descricao: string;
   valor: number;
   pago: boolean;
+  vezes: number;
   tipo: "Receita" | "Despesa" | "Transferencia" | string;
 };
 
@@ -33,16 +35,24 @@ function NewTransaction() {
   const dadosIniciais: TransactionForm = {
     categoria: 0,
     conta: 0,
-    data: "",
+    cartao: 0,
+    data: new Date(),
     descricao: "",
     valor: 0,
     tipo: tipo,
     pago: true,
+    vezes: 1,
   };
 
   const [data, setData] = useState(dadosIniciais);
 
   const handleNext = (inputs: Partial<TransactionForm>) => {
+    if ("conta" in inputs) {
+      inputs.cartao = 0;
+    } else if ("cartao" in inputs) {
+      inputs.conta = 0;
+    }
+
     setData((old) => {
       return {
         ...old,

@@ -61,7 +61,7 @@ const ItemLista = ({ id, tipo, descricao, valor }: ItemProp) => {
     <div className="flex items-center gap-4 p-2 px-3 bg-white rounded-xl shadow">
       <div className="flex flex-col">
         <h3 className="font-medium text-lg">{descricao}</h3>
-        <span className={`font-semibold text-${tipo.toLowerCase()}`}>
+        <span className={`font-semibold text-lg text-${tipo.toLowerCase()}`}>
           R$ {mascaraMoeda(valor)}
         </span>
       </div>

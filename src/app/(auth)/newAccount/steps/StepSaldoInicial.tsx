@@ -1,13 +1,16 @@
 "use client";
 
-import { useContext, useRef, useState } from "react";
-import { NewContext } from "../NewContext";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { ContaForm } from "../page";
 
-const StepSaldoInicial = () => {
-  const { handleNext, handleFormInput } = useContext(NewContext);
+type StepCreditoProps = {
+  handleNext: (inputs: Partial<ContaForm>) => void;
+};
+
+const StepSaldoInicial = ({ handleNext }: StepCreditoProps) => {
   const [input, setInput] = useState<string>();
 
   const handleSubmitInput = () => {
@@ -18,9 +21,9 @@ const StepSaldoInicial = () => {
       tempValue = String(0);
     }
 
-    handleFormInput({ chave: "saldoInicial", valor: tempValue });
-
-    handleNext();
+    handleNext({
+      saldoInicial: Number(tempValue),
+    });
   };
 
   const handleInput = (value: string) => {

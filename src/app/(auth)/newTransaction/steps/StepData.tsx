@@ -33,7 +33,7 @@ const SteData = ({ handleNext, corDestaque }: StepDataProps) => {
   const handleInput = () => {
     if (!inputRef.current.value) return;
 
-    const data = new Date(inputRef.current.value).toISOString();
+    const data = new Date(inputRef.current.value);
 
     handleNext({
       data: data,

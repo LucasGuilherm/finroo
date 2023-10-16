@@ -1,24 +1,28 @@
 "use client";
 
-import { useContext, useRef, useState } from "react";
-import { NewContext } from "../NewContext";
+import { ContaForm } from "../page";
 
-const listaTipoConta = [
+type tipoConta = "Dinheiro" | "Débito" | "Crédito" | "Poupança";
+
+const listaTipoConta: {
+  id: number;
+  tipo: tipoConta;
+}[] = [
   { id: 1, tipo: "Dinheiro" },
   { id: 2, tipo: "Débito" },
   { id: 3, tipo: "Crédito" },
   { id: 4, tipo: "Poupança" },
 ];
 
-const StepTipo = () => {
-  const { handleNext, handleFormInput } = useContext(NewContext);
+type StepTipoProps = {
+  handleNext: (inputs: Partial<ContaForm>) => void;
+};
 
-  const handleInput = (tipo: string) => {
+const StepTipo = ({ handleNext }: StepTipoProps) => {
+  const handleInput = (tipo: tipoConta) => {
     if (!tipo) return;
 
-    handleFormInput({ chave: "tipo", valor: tipo });
-
-    handleNext();
+    handleNext({ tipo: tipo });
   };
 
   return (

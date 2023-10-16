@@ -48,20 +48,16 @@ type createContaUserProps = {
   conta: string;
   userId: number;
   tipo: string;
-  fechamento?: number;
-  vencimento?: number;
 };
 
 export const createContaUser = async (novaConta: createContaUserProps) => {
-  const { conta, userId, tipo, fechamento, vencimento } = novaConta;
+  const { conta, userId, tipo } = novaConta;
 
   const newConta = await prisma.contas.create({
     data: {
       conta,
       userId,
       tipo,
-      fechamento,
-      vencimento,
     },
   });
 

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { fetchApi } from "@/lib/fetchWrap";
 import { conta } from "../../accounts/components/accountsList";
-import { getContas } from "../../newTransaction/steps/StepConta";
+import { getContasCartoes } from "../../newTransaction/steps/StepConta";
 import { ItemConta } from "../../newTransaction/components/itemConta";
 import { dadosForm } from "../page";
 
@@ -17,12 +17,11 @@ type props = {
 const ContaInput = ({ onClick, contaSaida }: props) => {
   const {
     data: dados,
-    isLoading,
     isError,
     error,
-  } = useQuery<conta[]>({
+  } = useQuery({
     queryKey: ["contas"],
-    queryFn: getContas,
+    queryFn: getContasCartoes,
   });
 
   if (isError) {
@@ -40,16 +39,21 @@ const ContaInput = ({ onClick, contaSaida }: props) => {
       </h1>
       <div className="flex flex-col gap-4">
         {dados?.map((conta) => {
-          if (conta.tipo == "Crédito" || conta.id == contaSaida) {
-            return false;
+          if ("conta" in conta) {
+            return;
+          }
+
+          if (conta.id == contaSaida) {
+            return;
           }
 
           return (
             <ItemConta
               key={conta.id}
               id={conta.id}
-              nome={conta.conta}
+              nome={conta.nome}
               onClick={handleInput}
+              tipo="despesa"
             />
           );
         })}

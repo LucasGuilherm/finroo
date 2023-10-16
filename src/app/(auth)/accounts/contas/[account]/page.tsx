@@ -7,18 +7,25 @@ import { mascaraMoeda } from "@/lib/utils";
 
 type pageProps = {
   params: { account: string };
+  searchParams: { tipo: "cartao" | "conta" };
 };
 
-const Account = async ({ params }: pageProps) => {
+const Account = async ({ params, searchParams }: pageProps) => {
   const session = await getServerSession(authOptions);
 
-  const conta = await getContaById({
-    contaId: Number(params.account),
-    userId: Number(session?.user.id),
-  });
+  const { tipo } = searchParams;
+
+  let conta;
+
+  if (tipo == "conta") {
+    conta = await getContaById({
+      contaId: Number(params.account),
+      userId: Number(session?.user.id),
+    });
+  }
 
   if (!conta) {
-    return;
+    return <h1>Conta não existe</h1>;
   }
 
   return (

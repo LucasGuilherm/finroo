@@ -1,13 +1,16 @@
 "use client";
 
-import { useContext, useRef, useState } from "react";
-import { NewContext } from "../NewContext";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ChevronRight } from "lucide-react";
 import { Input } from "@/components/ui/input";
+import { ContaForm } from "../page";
 
-const StepCredito = () => {
-  const { handleNext, handleFormInput } = useContext(NewContext);
+type StepCreditoProps = {
+  handleNext: (inputs: Partial<ContaForm>) => void;
+};
+
+const StepCredito = ({ handleNext }: StepCreditoProps) => {
   const refVencimento = useRef<HTMLInputElement>(null);
   const refFechamento = useRef<HTMLInputElement>(null);
 
@@ -26,16 +29,10 @@ const StepCredito = () => {
       return;
     }
 
-    handleFormInput({
-      chave: "vencimento",
-      valor: diaVencimento,
+    handleNext({
+      fechamento: diaFechamento,
+      vencimento: diaVencimento,
     });
-    handleFormInput({
-      chave: "fechamento",
-      valor: diaFechamento,
-    });
-
-    handleNext();
   };
 
   const numberLimit = (ref: React.RefObject<HTMLInputElement>) => {

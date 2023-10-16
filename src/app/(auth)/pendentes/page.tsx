@@ -32,7 +32,11 @@ const Pententes = async ({ searchParams }: PententesProps) => {
 
   return (
     <>
-      <ListaPendentes titulo={titulo} listaPendentes={listaPendentes} />
+      <ListaPendentes
+        titulo={titulo}
+        listaPendentes={listaPendentes}
+        tipo={tipo}
+      />
     </>
   );
 };

@@ -18,8 +18,11 @@ model User {
   username String?
   password String
 
-  contas      Contas[]
-  Lancamentos Lancamentos[]
+  contas           Contas[]
+  Lancamentos      Lancamentos[]
+  Cartoes          Cartoes[]
+  Fatura           Fatura[]
+  PagamentosFatura PagamentosFatura[]
 }
 
 model Lancamentos {
@@ -30,8 +33,11 @@ model Lancamentos {
   data      DateTime
   pago      Boolean  @default(true)
 
-  contaId Int
-  conta   Contas @relation(fields: [contaId], references: [id])
+  contaId Int?
+  conta   Contas? @relation(fields: [contaId], references: [id])
+
+  cartaoId Int?
+  cartao   Cartoes? @relation(fields: [cartaoId], references: [id])
 
   categoriaId Int
   categoria   Categorias @relation(fields: [categoriaId], references: [id])
@@ -42,15 +48,14 @@ model Lancamentos {
   @@index([userId])
   @@index([categoriaId])
   @@index([contaId])
+  @@index([cartaoId])
 }
 
 model Contas {
-  id         Int      @id @default(autoincrement())
-  conta      String
-  tipo       String
-  saldo      Decimal? @default(0)
-  fechamento Int?
-  vencimento Int?
+  id    Int      @id @default(autoincrement())
+  conta String
+  tipo  String
+  saldo Decimal? @default(0)
 
   userId Int
   user   User @relation(fields: [userId], references: [id])
@@ -58,6 +63,56 @@ model Contas {
   lancamentos Lancamentos[]
 
   @@index([userId])
+}
+
+model Cartoes {
+  id            Int     @id @default(autoincrement())
+  nome          String
+  limite        Decimal @default(0)
+  diaFechamento Int
+  diaVencimento Int
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  lancamentos Lancamentos[]
+  Fatura      Fatura[]
+
+  @@index([userId])
+}
+
+model Fatura {
+  id             Int      @id @default(autoincrement())
+  valorTotal     Decimal
+  valorPago      Decimal
+  dataVencimento DateTime
+  dataFechamento DateTime
+
+  cartaoId Int
+  cartao   Cartoes @relation(fields: [cartaoId], references: [id])
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  PagamentosFatura PagamentosFatura[]
+
+  @@index([cartaoId])
+  @@index([userId])
+}
+
+model PagamentosFatura {
+  id            Int      @id @default(autoincrement())
+  valorPago     Decimal
+  dataPagamento DateTime
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  faturaId Int
+  fatura   Fatura @relation(fields: [faturaId], references: [id])
+
+  @@index([userId])
+  @@index([faturaId])
 }
 
 model Categorias {

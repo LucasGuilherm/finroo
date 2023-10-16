@@ -1,5 +1,6 @@
 import { TransactionForm } from "@/app/(auth)/newTransaction/page";
 import { authOptions } from "@/lib/auth";
+import { atualizarFaturaCartao } from "@/lib/dbActions/cartoes";
 import { atualizarSaldoConta } from "@/lib/dbActions/contas";
 import { createLancamento } from "@/lib/lancamentos";
 import { getServerSession } from "next-auth";
@@ -13,10 +14,20 @@ export const POST = async (request: Request) => {
 
   const lancamento = await createLancamento({ ...data, userId });
 
-  await atualizarSaldoConta({
-    contaId: data.conta,
-    userId,
-  });
+  // if (data.conta) {
+  //   await atualizarSaldoConta({
+  //     contaId: data.conta,
+  //     userId,
+  //   });
+  // }
+
+  // if (data.cartao) {
+  //   await atualizarFaturaCartao({
+  //     cartaoId: data.cartao,
+  //     userId,
+  //     dataReferencia: new Date(data.data),
+  //   });
+  // }
 
   return NextResponse.json({ lancamento });
 };

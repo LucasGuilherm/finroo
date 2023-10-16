@@ -5,16 +5,19 @@ import Link from "next/link";
 import { ItemConta } from "../components/itemConta";
 import { useQuery } from "@tanstack/react-query";
 import { fetchApi } from "@/lib/fetchWrap";
-import { conta } from "../../accounts/components/accountsList";
+import { cartao, conta } from "../../accounts/components/accountsList";
 import { Skeleton } from "@/components/ui/skeleton";
 import { TransactionForm } from "../page";
 
-export const getContas = async () => {
-  let { listaContas } = await fetchApi<{ listaContas: conta[] }>(
-    "/contas/getContas"
-  );
+export const getContasCartoes = async () => {
+  const [{ listaContas }, { listaCartoes }] = await Promise.all([
+    fetchApi<{ listaContas: conta[] }>("/contas/getContas"),
+    fetchApi<{ listaCartoes: cartao[] }>("/cartoes/getCartoes"),
+  ]);
 
-  return listaContas;
+  const lista: (conta | cartao)[] = [...listaContas, ...listaCartoes];
+
+  return lista;
 };
 
 type StepContaProps = {
@@ -23,17 +26,23 @@ type StepContaProps = {
 };
 
 const StepConta = ({ handleNext, tipo }: StepContaProps) => {
-  const { data, isLoading, isError, error } = useQuery<conta[]>({
+  const { data, isLoading, isError, error } = useQuery({
     queryKey: ["contas"],
-    queryFn: getContas,
+    queryFn: getContasCartoes,
   });
 
   if (isError) {
     console.error(error);
   }
 
-  const handleInput = (value: number) => {
-    handleNext({ conta: value });
+  const handleInput = (value: number, tipo: string) => {
+    if (tipo == "conta") {
+      handleNext({ conta: value });
+    }
+
+    if (tipo == "cartao") {
+      handleNext({ cartao: value });
+    }
   };
 
   return (
@@ -53,19 +62,32 @@ const StepConta = ({ handleNext, tipo }: StepContaProps) => {
           </>
         )}
 
-        {data?.map((conta) => {
-          if (tipo == "Receita" && conta.tipo == "Crédito") {
+        {data?.map((conta, index) => {
+          if (tipo == "Receita" && "nome" in conta) {
             return;
           }
 
-          return (
-            <ItemConta
-              key={conta.id}
-              id={conta.id}
-              nome={conta.conta}
-              onClick={handleInput}
-            />
-          );
+          if ("nome" in conta) {
+            return (
+              <ItemConta
+                key={index}
+                id={conta.id}
+                nome={conta.nome}
+                tipo={"cartao"}
+                onClick={handleInput}
+              />
+            );
+          } else {
+            return (
+              <ItemConta
+                key={index}
+                id={conta.id}
+                tipo={"conta"}
+                nome={conta.conta}
+                onClick={handleInput}
+              />
+            );
+          }
         })}
         <Link href={"/newAccount"}>
           <div className="flex flex-row items-center gap-4 mt-4">

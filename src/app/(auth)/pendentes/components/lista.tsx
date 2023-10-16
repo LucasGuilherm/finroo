@@ -1,25 +1,23 @@
 "use client";
 
-import { addHours, format, getMonth, startOfMonth } from "date-fns";
+import { addHours, format, startOfMonth } from "date-fns";
 import { ptBR } from "date-fns/locale";
 import { itemPendente } from "../page";
 import ItemLista from "./itemLista";
-
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import ListaMeses from "./listaMeses";
 
 type ListaPendentesProps = {
   listaPendentes: itemPendente[];
   titulo: string;
+  tipo: string;
 };
 
-const ListaPendentes = ({ listaPendentes, titulo }: ListaPendentesProps) => {
+const ListaPendentes = ({
+  listaPendentes,
+  titulo,
+  tipo,
+}: ListaPendentesProps) => {
   let mesesLista: string[] = [];
 
   for (const element of listaPendentes) {
@@ -33,36 +31,21 @@ const ListaPendentes = ({ listaPendentes, titulo }: ListaPendentesProps) => {
 
   const [selected, setSelected] = useState(mesesLista[0]);
 
+  const handleSetSelected = (data: string) => {
+    setSelected(data);
+  };
+
   return (
     <>
       <div className="flex justify-between">
         <h2 className="text-2xl font-medium">Contas a {titulo}</h2>
-        <Select
-          onValueChange={(valor) => setSelected(valor)}
-          defaultValue={mesesLista[0]}
-        >
-          <SelectTrigger className="w-fit gap-2 bg-transparent font-medium text-xl">
-            <SelectValue placeholder="Theme" />
-          </SelectTrigger>
-          <SelectContent>
-            {mesesLista.map((data) => {
-              const dataFormated = format(
-                addHours(new Date(data), 3),
-                "MMM. yy",
-                {
-                  locale: ptBR,
-                }
-              );
-
-              return (
-                <SelectItem key={data} value={data}>
-                  {dataFormated}
-                </SelectItem>
-              );
-            })}
-          </SelectContent>
-        </Select>
       </div>
+
+      <ListaMeses
+        tipo={tipo}
+        mesesLista={mesesLista}
+        onClick={handleSetSelected}
+      />
 
       <div className="w-full flex flex-col gap-3">
         {listaPendentes.map((lancamento) => {

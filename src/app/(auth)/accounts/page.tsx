@@ -6,8 +6,6 @@ import { Plus } from "lucide-react";
 const Accounts = () => {
   return (
     <>
-      {/* <NavHeader variant="close" /> */}
-
       <h1 className="text-2xl font-medium">Minhas contas e cartoes</h1>
 
       <Suspense>
