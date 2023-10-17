@@ -9,15 +9,10 @@ import ListaMeses from "./listaMeses";
 
 type ListaPendentesProps = {
   listaPendentes: itemPendente[];
-  titulo: string;
   tipo: string;
 };
 
-const ListaPendentes = ({
-  listaPendentes,
-  titulo,
-  tipo,
-}: ListaPendentesProps) => {
+const ListaPendentes = ({ listaPendentes, tipo }: ListaPendentesProps) => {
   let mesesLista: string[] = [];
 
   for (const element of listaPendentes) {
@@ -37,10 +32,6 @@ const ListaPendentes = ({
 
   return (
     <>
-      <div className="flex justify-between">
-        <h2 className="text-2xl font-medium">Contas a {titulo}</h2>
-      </div>
-
       <ListaMeses
         tipo={tipo}
         mesesLista={mesesLista}

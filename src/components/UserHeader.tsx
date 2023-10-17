@@ -10,9 +10,11 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { Separator } from "@/components/ui/separator";
 import { LogOut } from "lucide-react";
 import { Button } from "./ui/button";
 import { signOut } from "next-auth/react";
+import ColorSelect from "./colorSelect";
 
 const UserHeader = () => {
   const handleLogout = () => {
@@ -38,7 +40,10 @@ const UserHeader = () => {
           <SheetHeader>
             <SheetTitle>Finroo</SheetTitle>
           </SheetHeader>
-          <section className="flex flex-col py-4">
+
+          <section className="flex flex-col gap-4 py-4">
+            {/* <ColorSelect />
+            <Separator /> */}
             <Button
               onClick={handleLogout}
               variant={"destructive"}

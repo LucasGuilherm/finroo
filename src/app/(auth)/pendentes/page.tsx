@@ -32,11 +32,15 @@ const Pententes = async ({ searchParams }: PententesProps) => {
 
   return (
     <>
-      <ListaPendentes
-        titulo={titulo}
-        listaPendentes={listaPendentes}
-        tipo={tipo}
-      />
+      <div className="flex justify-between">
+        <h2 className="text-2xl font-medium">Contas a {titulo}</h2>
+      </div>
+
+      {listaPendentes.length ? (
+        <ListaPendentes listaPendentes={listaPendentes} tipo={tipo} />
+      ) : (
+        <h2 className="mx-auto my-12 text-zinc-400">Nenhum Lançamento</h2>
+      )}
     </>
   );
 };

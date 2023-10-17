@@ -52,8 +52,8 @@ const ResumoTotal = async () => {
           titulo="Receitas"
           valor={mascaraMoeda(totalReceitas)}
         />
-        <Separator className="my-4" />
-        <LinhaResumo titulo="Economias" valor={mascaraMoeda(totalEconomias)} />
+        {/* <Separator className="my-4" />
+        <LinhaResumo titulo="Economias" valor={mascaraMoeda(totalEconomias)} /> */}
       </div>
     </div>
   );

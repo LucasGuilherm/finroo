@@ -43,3 +43,16 @@ export const createNewUser = async ({
 
   return newUser;
 };
+
+export const getUserTheme = async ({ userId }: { userId: number }) => {
+  const themeColor = await prisma.settings.findFirst({
+    select: {
+      colorTheme: true,
+    },
+    where: {
+      userId,
+    },
+  });
+
+  return themeColor?.colorTheme;
+};

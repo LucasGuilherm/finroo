@@ -1,5 +1,5 @@
-import NavBar from "@/components/navBar";
 import { authOptions } from "@/lib/auth";
+import { getUserTheme } from "@/lib/dbActions/user";
 import {
   CheckErrorSession,
   SessionProvider,
@@ -13,10 +13,16 @@ export default async function RootLayout({
 }) {
   const session = await getServerSession(authOptions);
 
+  // const themeColor = await getUserTheme({ userId: Number(session?.user.id) });
+
+  // const color = themeColor
+  //   ? "bg-" + String(themeColor) + "-100"
+  //   : "bg-zinc-100";
+
   return (
     <SessionProvider session={session}>
       <CheckErrorSession>
-        <main className="bg-pink-100 min-h-screen overflow-auto">
+        <main className={`bg-pink-100 min-h-screen overflow-auto`}>
           {children}
         </main>
       </CheckErrorSession>

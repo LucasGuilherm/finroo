@@ -23,6 +23,7 @@ model User {
   Cartoes          Cartoes[]
   Fatura           Fatura[]
   PagamentosFatura PagamentosFatura[]
+  Settings         Settings[]
 }
 
 model Lancamentos {
@@ -121,4 +122,15 @@ model Categorias {
   icon      String
 
   lancamentos Lancamentos[]
+}
+
+model Settings {
+  id Int @id @default(autoincrement())
+
+  colorTheme String
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
 }

@@ -27,45 +27,9 @@ export const MeusCartoes = async () => {
     },
   });
 
-  // const cartoesComTotal = await Promise.all(
-  //   cartoesCredito.map(async (cartao) => {
-  //     const diaFechamento = cartao.diaFechamento || 1;
-
-  //     const today = new Date(
-  //       new Date(new Date().setUTCHours(23, 59, 59, 999)).toISOString()
-  //     );
-  //     const fechamento = sub(new Date().setUTCDate(diaFechamento), {
-  //       months: 1,
-  //     });
-
-  //     fechamento.setUTCHours(0, 0, 0, 0);
-
-  //     const lancamentos = await prisma.lancamentos.findMany({
-  //       where: {
-  //         userId: Number(session?.user.id),
-  //         cartaoId: cartao.id,
-  //         data: {
-  //           gte: fechamento,
-  //           lte: today,
-  //         },
-  //       },
-  //     });
-
-  //     const somatorioLancamentos = lancamentos.reduce(
-  //       (total, lancamento) => total + Number(lancamento.valor),
-  //       0
-  //     );
-
-  //     return {
-  //       ...cartao,
-  //       somatorioLancamentos,
-  //     };
-  //   })
-  // );
-
-  // if (!cartoesComTotal.length) {
-  //   return false;
-  // }
+  if (!cartoesCredito.length) {
+    return;
+  }
 
   return (
     <div className="flex flex-col">

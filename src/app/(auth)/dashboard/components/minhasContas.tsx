@@ -4,7 +4,7 @@ import Link from "next/link";
 const MinhasContas = () => {
   return (
     <Link
-      className="bg-white shadow hover:bg-slate-200 justify-between items-center py-5 px-4 rounded-xl flex"
+      className="bg-white shadow hover:bg-zinc-200 transition-colors justify-between items-center p-4 rounded-xl flex"
       href={"/accounts"}
     >
       <span className="font-medium text-black text-base">

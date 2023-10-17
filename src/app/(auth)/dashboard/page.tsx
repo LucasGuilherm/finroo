@@ -22,9 +22,9 @@ const Dashboard = () => {
       </section>
 
       <section className="flex flex-col gap-6 p-4">
-        <SecaoPendentes />
-
         <MinhasContas />
+
+        <SecaoPendentes />
 
         <ResumoTotal />
 

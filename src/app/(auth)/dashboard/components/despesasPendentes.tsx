@@ -31,41 +31,33 @@ const CardPendente = ({ valor, tipo, variant }: CardPendente) => {
       href={{ pathname: `/pendentes`, query: { tipo } }}
       className={cn(card({ variant }))}
     >
-      <span className="font-medium text-xl">R$ {mascaraMoeda(valor)}</span>
-      <h3 className="text-zinc-600 ">{message}</h3>
+      <span className="font-medium text-2xl">R$ {mascaraMoeda(valor)}</span>
+      <h3 className="text-zinc-600 font-medium">{message}</h3>
     </Link>
   );
 };
 
 const SecaoPendentes = async () => {
   const session = await getServerSession(authOptions);
+  const userId = Number(session?.user.id);
 
-  const pendente = await totalPendente({ userId: Number(session?.user.id) });
-
-  if (!pendente.length) {
-    return (
-      <h2 className="font-medium text-xl text-zinc-500">Nenhuma pendencia</h2>
-    );
-  }
+  const receita = await totalPendente({ userId, tipo: "Receita" });
+  const despesa = await totalPendente({ userId, tipo: "Despesa" });
 
   return (
     <div className="flex flex-col gap-4">
       <h2 className="font-medium text-xl">Pendentes</h2>
       <div className="flex gap-2">
-        {pendente.map((item, index) => {
-          if (!(item.tipo == "Receita" || item.tipo == "Despesa")) {
-            return;
-          }
-
-          return (
-            <CardPendente
-              key={index}
-              tipo={item.tipo}
-              valor={Math.abs(Number(item._sum.valor))}
-              variant={item.tipo}
-            />
-          );
-        })}
+        <CardPendente
+          tipo={"Receita"}
+          valor={Math.abs(Number(receita._sum.valor)) || 0}
+          variant={"Receita"}
+        />
+        <CardPendente
+          tipo={"Despesa"}
+          valor={Math.abs(Number(despesa._sum.valor)) || 0}
+          variant={"Despesa"}
+        />
       </div>
     </div>
   );

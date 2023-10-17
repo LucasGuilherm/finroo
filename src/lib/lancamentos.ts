@@ -56,8 +56,10 @@ export const createLancamento = async (dados: createLancamento) => {
   }
 
   for (let index = 0; index < vezes; index++) {
-    if (index > 0) {
+    if (index > 0 && conta) {
       pago = false;
+    } else {
+      pago = true;
     }
 
     data = addMonths(new Date(data), index);
@@ -282,21 +284,24 @@ export const transferirSaldo = async ({
   return { success: true };
 };
 
-export const totalPendente = async ({ userId }: { userId: number }) => {
+export const totalPendente = async ({
+  userId,
+  tipo,
+}: {
+  userId: number;
+  tipo: "Despesa" | "Receita";
+}) => {
   const dataIni = new Date(startOfMonth(new Date()).setUTCHours(0));
   const dataFim = subHours(new Date(endOfMonth(new Date())), 3);
 
-  const pendente = await prisma.lancamentos.groupBy({
-    by: ["tipo"],
+  const pendente = await prisma.lancamentos.aggregate({
     where: {
-      tipo: {
-        in: ["Despesa", "Receita"],
-      },
+      tipo: tipo,
       userId,
-      // data: {
-      //   gte: dataIni,
-      //   lte: dataFim,
-      // },
+      data: {
+        gte: dataIni,
+        lte: dataFim,
+      },
       pago: false,
     },
     _sum: {
