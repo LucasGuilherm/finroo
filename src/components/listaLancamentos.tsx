@@ -1,41 +1,8 @@
-import { ShoppingCart } from "lucide-react";
 import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { format } from "date-fns";
-import { mascaraMoeda } from "@/lib/utils";
-
-type itemProps = {
-  valor: number;
-  descricao: string;
-  data: string;
-  tipo: "Despesa" | "Receita";
-};
-
-const ItemLancamentoLista = ({ valor, descricao, tipo, data }: itemProps) => {
-  const valorFormat = mascaraMoeda(Number(valor));
-
-  return (
-    <li className="flex items-center gap-4">
-      <div
-        className={`${
-          tipo == "Despesa" ? "bg-despesa/70" : "bg-receita/70"
-        } rounded-full p-3 flex items-center justify-center`}
-      >
-        <ShoppingCart size={24} />
-      </div>
-
-      <div className="flex flex-col gap-1">
-        <h1 className="font-medium">{descricao}</h1>
-        <span className="text-xs">{data}</span>
-      </div>
-
-      <span className="ml-auto self-start font-medium text-lg whitespace-nowrap">
-        R$ {valorFormat}
-      </span>
-    </li>
-  );
-};
+import ItemLancamentoLista from "./itemListaLancamento";
 
 const ListaLancamentos = async ({ conta }: { conta?: number }) => {
   const session = await getServerSession(authOptions);
@@ -62,6 +29,7 @@ const ListaLancamentos = async ({ conta }: { conta?: number }) => {
 
           return (
             <ItemLancamentoLista
+              id={item.id}
               valor={Number(item.valor)}
               data={format(item.data, "dd MMM, HH:mm")}
               descricao={item.descricao}

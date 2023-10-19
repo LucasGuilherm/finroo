@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <QueryProvider>
       <html lang="en">
-        <body className={worksans.className}>{children}</body>
+        <body className={`${worksans.className} select-none`}>{children}</body>
       </html>
     </QueryProvider>
   );
