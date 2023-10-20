@@ -1,7 +1,7 @@
 import { ContaForm } from "@/app/(auth)/newAccount/page";
 import { authOptions } from "@/lib/auth";
 import { createContaUser, getContaByNameAndUser } from "@/lib/dbActions/contas";
-import { createLancamento } from "@/lib/lancamentos";
+import { createLancamento } from "@/lib/dbActions/lancamentos";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 

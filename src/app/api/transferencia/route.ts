@@ -1,7 +1,7 @@
 import { dadosForm } from "@/app/(auth)/transferencia/page";
 import { authOptions } from "@/lib/auth";
 import { atualizarSaldoConta } from "@/lib/dbActions/contas";
-import { createLancamento, transferirSaldo } from "@/lib/lancamentos";
+import { createLancamento, transferirSaldo } from "@/lib/dbActions/lancamentos";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 

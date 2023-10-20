@@ -1,5 +1,8 @@
 import { authOptions } from "@/lib/auth";
-import { setLancamentoPago } from "@/lib/dbActions/lancamentos";
+import {
+  createLancamento,
+  deleteLancamento,
+} from "@/lib/dbActions/lancamentos";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
@@ -7,9 +10,11 @@ export const POST = async (request: Request) => {
   const session = await getServerSession(authOptions);
   const userId = Number(session?.user.id);
 
-  const data: { id: number; pago: boolean } = await request.json();
+  const data: { id: number } = await request.json();
 
-  const lancamento = await setLancamentoPago({ ...data, userId });
+  console.log(data.id);
+
+  const lancamento = await deleteLancamento({ userId, id: data.id });
 
   return NextResponse.json({ lancamento });
 };

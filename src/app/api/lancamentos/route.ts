@@ -2,7 +2,7 @@ import { TransactionForm } from "@/app/(auth)/newTransaction/page";
 import { authOptions } from "@/lib/auth";
 import { atualizarFaturaCartao } from "@/lib/dbActions/cartoes";
 import { atualizarSaldoConta } from "@/lib/dbActions/contas";
-import { createLancamento } from "@/lib/lancamentos";
+import { createLancamento } from "@/lib/dbActions/lancamentos";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 

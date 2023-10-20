@@ -1,4 +1,4 @@
-import { getLancamentosPendentes } from "@/lib/lancamentos";
+import { getLancamentosPendentes } from "@/lib/dbActions/lancamentos";
 import ListaPendentes from "./components/lista";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";

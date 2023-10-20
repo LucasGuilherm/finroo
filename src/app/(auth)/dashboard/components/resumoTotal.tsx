@@ -5,7 +5,7 @@ import {
   totalDespesasMes,
   totalEconomiasMes,
   totalReceitasMes,
-} from "@/lib/lancamentos";
+} from "@/lib/dbActions/lancamentos";
 import { mascaraMoeda } from "@/lib/utils";
 import { ChevronRight } from "lucide-react";
 import { getServerSession } from "next-auth";

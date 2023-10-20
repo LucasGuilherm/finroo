@@ -73,6 +73,9 @@ const buscaFaturasComLancamentos = async ({
     where: {
       userId,
       cartaoId,
+      valorTotal: {
+        gt: 0,
+      },
       dataFechamento: {
         gte: dataIni,
       },

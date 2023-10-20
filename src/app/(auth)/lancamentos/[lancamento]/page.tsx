@@ -86,7 +86,7 @@ const Lancamento = async ({ params }: { params: LancamentoParams }) => {
         )}
       </div>
 
-      <BtnExcluir />
+      <BtnExcluir id={id} />
     </div>
   );
 };

@@ -1,8 +1,7 @@
 import { authOptions } from "@/lib/auth";
-import { totalPendente } from "@/lib/lancamentos";
+import { totalPendente } from "@/lib/dbActions/lancamentos";
 import { cn, mascaraMoeda } from "@/lib/utils";
 import { cva, VariantProps } from "class-variance-authority";
-import { ArrowRight } from "lucide-react";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
 

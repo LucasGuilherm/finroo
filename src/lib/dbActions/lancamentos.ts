@@ -1,10 +1,6 @@
 import { TransactionForm } from "@/app/(auth)/newTransaction/page";
-import {
-  atualizarSaldoConta,
-  getContaById,
-  getContaSaldo,
-} from "./dbActions/contas";
-import prisma from "./prisma";
+import { atualizarSaldoConta, getContaById, getContaSaldo } from "./contas";
+import prisma from "../prisma";
 import {
   addMonths,
   endOfMonth,
@@ -14,7 +10,7 @@ import {
   sub,
   subHours,
 } from "date-fns";
-import { atualizarFaturaCartao } from "./dbActions/cartoes";
+import { atualizarFaturaCartao } from "./cartoes";
 
 export const getLancamentos = async () => {
   try {
@@ -375,4 +371,35 @@ export const setLancamentoPago = async ({
   }
 
   return lancamento;
+};
+
+type deleteLancamento = {
+  userId: number;
+  id: number;
+};
+
+export const deleteLancamento = async ({ userId, id }: deleteLancamento) => {
+  const excluido = await prisma.lancamentos.delete({
+    where: {
+      userId,
+      id,
+    },
+  });
+
+  if (excluido.cartaoId) {
+    await atualizarFaturaCartao({
+      userId,
+      cartaoId: excluido.cartaoId,
+      dataReferencia: excluido.data,
+    });
+  }
+
+  if (excluido.contaId) {
+    await atualizarSaldoConta({
+      contaId: excluido.contaId,
+      userId,
+    });
+  }
+
+  return true;
 };
