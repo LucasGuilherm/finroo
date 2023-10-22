@@ -46,6 +46,8 @@ model Lancamentos {
   userId Int
   user   User @relation(fields: [userId], references: [id])
 
+  PagamentosFatura PagamentosFatura?
+
   @@index([userId])
   @@index([categoriaId])
   @@index([contaId])
@@ -112,6 +114,10 @@ model PagamentosFatura {
   faturaId Int
   fatura   Fatura @relation(fields: [faturaId], references: [id])
 
+  lancamento   Lancamentos @relation(fields: [lancamentoId], references: [id])
+  lancamentoId Int         @unique
+
+  @@index([lancamentoId])
   @@index([userId])
   @@index([faturaId])
 }

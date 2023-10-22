@@ -28,7 +28,7 @@ const ListaMeses = ({ mesesLista, onClick, tipo }: ListaMesesprops) => {
   return (
     <div className="flex flex-row overflow-x-scroll no-scrollbar">
       {mesesLista.map((data) => {
-        const dataFormated = format(addHours(new Date(data), 3), "yy MMM", {
+        const dataFormated = format(addHours(new Date(data), 3), "MMM yy", {
           locale: ptBR,
         });
 

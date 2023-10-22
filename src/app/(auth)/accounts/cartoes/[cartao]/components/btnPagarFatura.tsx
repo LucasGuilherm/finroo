@@ -1,9 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Banknote } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const ButtonPagarFatura = ({ faturaId }: { faturaId: number }) => {
+  const router = useRouter();
+
   const handleClick = () => {
-    console.log("Fatura Paga");
+    router.push(`./pagarFatura?faturaId=${faturaId}`);
   };
 
   return (

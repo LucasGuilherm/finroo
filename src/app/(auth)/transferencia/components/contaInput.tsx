@@ -1,10 +1,6 @@
 "use client";
 
-import { Plus, PlusCircle } from "lucide-react";
-import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
-import { fetchApi } from "@/lib/fetchWrap";
-import { conta } from "../../accounts/components/accountsList";
 import { getContasCartoes } from "../../newTransaction/steps/StepConta";
 import { ItemConta } from "../../newTransaction/components/itemConta";
 import { dadosForm } from "../page";

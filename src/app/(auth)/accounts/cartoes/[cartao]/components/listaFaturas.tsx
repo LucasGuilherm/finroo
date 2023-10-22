@@ -6,8 +6,6 @@ import { cartao, faturaComLancamentos } from "../page";
 import ListaLancamentos from "./listaLancamentos";
 import { format } from "date-fns";
 import { mascaraMoeda } from "@/lib/utils";
-import { Button } from "@/components/ui/button";
-import { Banknote } from "lucide-react";
 import ButtonPagarFatura from "./btnPagarFatura";
 
 type props = {
@@ -27,7 +25,8 @@ const FaturaCartao = ({ faturas, faturaComLancamentos, cartao }: props) => {
     return format(fatuta.dataFechamento, "yyyy-MM-dd") == mesSelect;
   });
 
-  const { valorTotal } = listaFiltrada[0];
+  const { valorTotal, valorPago } = listaFiltrada[0];
+  const valorAberto = Number(valorTotal) - Number(valorPago);
 
   return (
     <>
@@ -35,16 +34,16 @@ const FaturaCartao = ({ faturas, faturaComLancamentos, cartao }: props) => {
         <h1 className="text-2xl font-medium">{cartao?.nome}</h1>
 
         <span className="text-4xl font-medium">
-          R$ {mascaraMoeda(Number(valorTotal))}
+          R$ {mascaraMoeda(valorAberto)}
         </span>
-        <div>
-          <span>
-            Limite disponível: R${" "}
-            {mascaraMoeda(Number(cartao.limite) - Number(valorTotal))}
-          </span>
+        <div className="flex flex-col">
+          <span>Valor total: R$ {mascaraMoeda(Number(valorTotal))}</span>
+          <span>Valor pago: R$ {mascaraMoeda(Number(valorPago))}</span>
         </div>
 
-        <ButtonPagarFatura faturaId={listaFiltrada[0].id} />
+        {valorAberto != 0 && (
+          <ButtonPagarFatura faturaId={listaFiltrada[0].id} />
+        )}
       </div>
 
       <div className="w-full flex flex-col gap-6 items-center">

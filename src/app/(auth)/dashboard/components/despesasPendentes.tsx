@@ -10,8 +10,8 @@ const card = cva(
   {
     variants: {
       variant: {
-        Receita: "bg-white text-receita",
-        Despesa: "bg-white text-despesa",
+        Receita: "bg-receita/10 text-receita",
+        Despesa: "bg-despesa/10 text-despesa",
       },
     },
   }
@@ -23,7 +23,7 @@ type CardPendente = VariantProps<typeof card> & {
 };
 
 const CardPendente = ({ valor, tipo, variant }: CardPendente) => {
-  const message = tipo == "Despesa" ? "para pagar" : "para receber";
+  const message = tipo == "Despesa" ? "A pagar" : "A receber";
 
   return (
     <Link
@@ -31,7 +31,7 @@ const CardPendente = ({ valor, tipo, variant }: CardPendente) => {
       className={cn(card({ variant }))}
     >
       <span className="font-medium text-2xl">R$ {mascaraMoeda(valor)}</span>
-      <h3 className="text-zinc-600 font-medium">{message}</h3>
+      <h3 className="text-zinc-700 font-medium">{message}</h3>
     </Link>
   );
 };

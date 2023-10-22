@@ -16,7 +16,7 @@ const BtnExcluir = ({ id }: { id: number }) => {
     <>
       <ConfirmacaoExcluir id={id} open={confirm} close={handleOpenConfirm} />
       <Button
-        className="rounded-full text-lg gap-2 transition-all bg-destructive/90"
+        className="rounded-full text-lg gap-2 my-4 transition-all bg-destructive/90"
         size={"lg"}
         variant={"destructive"}
         onClick={handleOpenConfirm}

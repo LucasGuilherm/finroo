@@ -85,25 +85,11 @@ const buscaFaturasComLancamentos = async ({
     },
   });
 
-  const faturaMinima = await prisma.fatura.findFirst({
-    select: {
-      dataFechamento: true,
-    },
-    where: {
-      userId,
-      cartaoId,
-      dataFechamento: {
-        gte: dataIni,
-      },
-    },
-    orderBy: {
-      dataFechamento: "asc",
-    },
-  });
+  const faturaMinima = faturas[0].dataFechamento;
 
   if (!faturaMinima) return;
 
-  const datatemp = sub(faturaMinima?.dataFechamento, { months: 1 });
+  const datatemp = sub(faturaMinima, { months: 1 });
 
   const lancamentos = await prisma.lancamentos.findMany({
     where: {

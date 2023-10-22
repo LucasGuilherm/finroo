@@ -65,6 +65,10 @@ function NewTransaction() {
 
   const corDestaque = tipo == "Receita" ? "receita" : "despesa";
 
+  // useEffect(() => {
+  //   console.log(data);
+  // }, [data]);
+
   const { step, next, isLast, isFirst, back } = useMultistep([
     <StepConta {...data} handleNext={handleNext} />,
     <StepValor {...data} handleNext={handleNext} corDestaque={corDestaque} />,

@@ -54,7 +54,9 @@ export const createLancamento = async (dados: createLancamento) => {
   for (let index = 0; index < vezes; index++) {
     if (index > 0 && conta) {
       pago = false;
-    } else {
+    }
+
+    if (cartao) {
       pago = true;
     }
 
@@ -402,4 +404,25 @@ export const deleteLancamento = async ({ userId, id }: deleteLancamento) => {
   }
 
   return true;
+};
+
+export const getLancamentoById = async ({
+  userId,
+  id,
+}: {
+  userId: number;
+  id: number;
+}) => {
+  const lancamento = await prisma.lancamentos.findUnique({
+    where: {
+      id,
+      userId,
+    },
+    include: {
+      conta: true,
+      cartao: true,
+    },
+  });
+
+  return lancamento;
 };
