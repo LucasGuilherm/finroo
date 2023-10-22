@@ -67,15 +67,12 @@ const buscaFaturasComLancamentos = async ({
   );
 
   const dataIni = sub(dataReferencia, { months: 12 });
-  const dataFim = add(dataReferencia, { months: 12 });
+  // const dataFim = add(dataReferencia, { months: 12 });
 
   const faturas = await prisma.fatura.findMany({
     where: {
       userId,
       cartaoId,
-      valorTotal: {
-        gt: 0,
-      },
       dataFechamento: {
         gte: dataIni,
       },
@@ -85,9 +82,9 @@ const buscaFaturasComLancamentos = async ({
     },
   });
 
-  const faturaMinima = faturas[0].dataFechamento;
+  if (!faturas.length) return;
 
-  if (!faturaMinima) return;
+  const faturaMinima = faturas[0].dataFechamento;
 
   const datatemp = sub(faturaMinima, { months: 1 });
 
