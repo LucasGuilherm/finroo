@@ -1,9 +1,7 @@
 import { Separator } from "@/components/ui/separator";
 import { authOptions } from "@/lib/auth";
 import {
-  totalCreditoMes,
   totalDespesasMes,
-  totalEconomiasMes,
   totalReceitasMes,
 } from "@/lib/dbActions/lancamentos";
 import { mascaraMoeda } from "@/lib/utils";
@@ -27,10 +25,10 @@ const LinhaResumo = ({ titulo, valor, corDestaque }: linhaResumoType) => {
 const ResumoTotal = async () => {
   const session = await getServerSession(authOptions);
 
-  const [totalDespesas, totalReceitas, totalEconomias] = await Promise.all([
+  const [totalDespesas, totalReceitas] = await Promise.all([
     totalDespesasMes(Number(session?.user.id)),
     totalReceitasMes(Number(session?.user.id)),
-    totalEconomiasMes(Number(session?.user.id)),
+    // totalEconomiasMes(Number(session?.user.id)),
   ]);
 
   return (
@@ -52,8 +50,6 @@ const ResumoTotal = async () => {
           titulo="Receitas"
           valor={mascaraMoeda(totalReceitas)}
         />
-        {/* <Separator className="my-4" />
-        <LinhaResumo titulo="Economias" valor={mascaraMoeda(totalEconomias)} /> */}
       </div>
     </div>
   );

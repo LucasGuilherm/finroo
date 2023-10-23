@@ -307,7 +307,7 @@ export const totalPendente = async ({
     },
   });
 
-  return pendente;
+  return Number(pendente._sum.valor) || 0;
 };
 
 export const getLancamentosPendentes = async <T = unknown>({

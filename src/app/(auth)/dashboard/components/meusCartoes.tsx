@@ -70,18 +70,20 @@ const CardCartao = ({ name, valor, conta, aberto, vencimento }: Cartao) => {
         pathname: `accounts/cartoes/${conta}`,
         query: { tipo: "cartao" },
       }}
-      className="bg-white p-4 rounded-xl w-3/5 shrink-0 flex flex-col gap-2 shadow"
+      className="bg-white p-4 rounded-xl w-4/5 shrink-0 flex flex-col gap-2 shadow"
     >
-      <div>
+      <div className="flex flex-row items-baseline justify-between">
         <h2 className="text-lg font-medium">{name}</h2>
-        <span>{format(vencimento, "dd MMM")}</span>
+        <span className="whitespace-nowrap font-medium">
+          <span>Venc: </span>
+          {format(vencimento, "dd MMM")}
+        </span>
       </div>
-      <div>
-        <h3 className="text-lg font-medium text-despesa">
-          Aberto: R$ {mascaraMoeda(aberto)}
+      <div className="flex flex-row gap-5">
+        <h3 className="text-xl font-medium text-despesa">
+          R$ {mascaraMoeda(valor)}
         </h3>
       </div>
-      {/* <span className="font-medium text-despesa">R$ {mascaraMoeda(valor)}</span> */}
     </Link>
   );
 };

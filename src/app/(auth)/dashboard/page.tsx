@@ -5,6 +5,8 @@ import { MeusCartoes } from "./components/meusCartoes";
 import SaldoTotal from "./components/saldoTotal";
 import SecaoPendentes from "./components/despesasPendentes";
 import MinhasContas from "./components/minhasContas";
+import { Suspense } from "react";
+import Loading from "../loading";
 
 export const revalidate = 0;
 
@@ -24,7 +26,9 @@ const Dashboard = () => {
       <section className="flex flex-col gap-6 p-4">
         <MinhasContas />
 
-        <SecaoPendentes />
+        <Suspense fallback={<h2 className="font-medium text-xl">Pendentes</h2>}>
+          <SecaoPendentes />
+        </Suspense>
 
         <ResumoTotal />
 

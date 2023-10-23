@@ -1,4 +1,3 @@
-import { X } from "lucide-react";
 import Header from "./components/header";
 
 export default function RootLayout({

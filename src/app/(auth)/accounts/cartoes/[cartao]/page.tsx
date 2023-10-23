@@ -20,7 +20,7 @@ const Cartao = async ({ params }: pageProps) => {
   });
 
   if (!cartao) {
-    return <h1>Cartao n existe</h1>;
+    return <h1>Cartão não existe</h1>;
   }
 
   const info = await buscaFaturasComLancamentos({

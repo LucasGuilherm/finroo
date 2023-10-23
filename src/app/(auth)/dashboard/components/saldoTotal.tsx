@@ -3,9 +3,6 @@ import { saldoTotal } from "@/lib/dbActions/lancamentos";
 import { mascaraMoeda } from "@/lib/utils";
 import { getServerSession } from "next-auth";
 
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
-
 const SaldoTotal = async () => {
   const session = await getServerSession(authOptions);
 
