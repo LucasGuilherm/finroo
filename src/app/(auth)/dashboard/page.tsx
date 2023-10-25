@@ -5,24 +5,23 @@ import { MeusCartoes } from "./components/meusCartoes";
 import SaldoTotal from "./components/saldoTotal";
 import SecaoPendentes from "./components/despesasPendentes";
 import MinhasContas from "./components/minhasContas";
+import { Separator } from "@/components/ui/separator";
 
 export const revalidate = 0;
 
 const Dashboard = () => {
   return (
     <>
-      <section className="flex flex-col p-4 bg-zinc-0">
+      <section className="flex flex-col gap-6 p-4">
         <UserHeader />
 
-        <div className="flex flex-col gap-6">
-          <SaldoTotal />
+        <SaldoTotal />
 
-          <BtnsNew />
-        </div>
-      </section>
+        <BtnsNew />
 
-      <section className="flex flex-col gap-6 p-4">
         <MinhasContas />
+
+        <Separator />
 
         <SecaoPendentes />
 
