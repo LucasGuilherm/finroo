@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu } from "lucide-react";
+import { Bell, Menu } from "lucide-react";
 import SideBar from "./sideBar";
 import { useState } from "react";
 
@@ -13,7 +13,8 @@ const UserHeader = () => {
 
   return (
     <>
-      <div className="ml-auto">
+      <div className="flex justify-between items-center">
+        <Bell size={25} />
         <Menu size={28} onClick={() => handleClick(true)} />
       </div>
       <SideBar open={open} handleClose={() => handleClick(false)} />
