@@ -4,13 +4,11 @@ import Link from "next/link";
 const MinhasContas = () => {
   return (
     <Link
-      className="bg-white shadow justify-between items-center p-4 rounded-xl flex"
+      className="flex justify-center items-center px-4 py-2 gap-4 rounded-full "
       href={"/accounts"}
     >
-      <span className="font-medium text-black text-base">
-        Minhas contas e cartões
-      </span>
-      <ArrowRight />
+      <span className="font-medium text-black text-base">Contas e cartões</span>
+      <ArrowRight size={20} />
     </Link>
   );
 };

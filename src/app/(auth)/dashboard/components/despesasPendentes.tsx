@@ -94,7 +94,7 @@ const CardSkeleton = () => {
       <Skeleton className="font-medium text-2xl text-transparent">
         span
       </Skeleton>
-      <h3 className="text-zinc-700 font-medium text-transparent">h3</h3>
+      <h3 className="font-medium text-transparent">teste</h3>
     </Skeleton>
   );
 };
