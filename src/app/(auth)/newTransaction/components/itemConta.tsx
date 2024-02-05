@@ -12,7 +12,7 @@ export const ItemConta = ({ id, nome, onClick, tipo }: props) => {
       className="flex flex-row items-center gap-4"
       onClick={() => onClick(id, tipo)}
     >
-      <div className="bg-slate-200 rounded-full h-12 w-12"></div>
+      <div className="bg-slate-300 rounded-full h-12 w-12"></div>
       <span className="font-medium text-base">{nome}</span>
     </div>
   );

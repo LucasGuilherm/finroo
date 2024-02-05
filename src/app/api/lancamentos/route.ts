@@ -14,20 +14,5 @@ export const POST = async (request: Request) => {
 
   const lancamento = await createLancamento({ ...data, userId });
 
-  // if (data.conta) {
-  //   await atualizarSaldoConta({
-  //     contaId: data.conta,
-  //     userId,
-  //   });
-  // }
-
-  // if (data.cartao) {
-  //   await atualizarFaturaCartao({
-  //     cartaoId: data.cartao,
-  //     userId,
-  //     dataReferencia: new Date(data.data),
-  //   });
-  // }
-
   return NextResponse.json({ lancamento });
 };

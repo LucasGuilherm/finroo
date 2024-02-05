@@ -60,13 +60,13 @@ export const createLancamento = async (dados: createLancamento) => {
       pago = true;
     }
 
-    data = addMonths(new Date(data), index);
+    const dataLancamento = addMonths(new Date(data), index);
 
     listaLancamento.push({
       descricao,
       tipo,
       valor: tipo == "Despesa" ? valor * -1 : valor,
-      data,
+      data: dataLancamento,
       contaId: conta,
       categoriaId: categoria,
       userId: userId,

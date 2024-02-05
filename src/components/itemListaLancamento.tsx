@@ -41,7 +41,7 @@ const ItemLancamentoLista = ({
         <span className="text-xs">{data}</span>
       </div>
 
-      <span className="ml-auto self-start font-medium text-lg whitespace-nowrap">
+      <span className="ml-auto font-medium text-lg whitespace-nowrap">
         R$ {valorFormat}
       </span>
     </li>

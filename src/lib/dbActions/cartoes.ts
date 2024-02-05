@@ -101,6 +101,7 @@ type getCartaoIdProps = {
   cartaoId: number;
   userId: number;
 };
+
 export const getCartaoId = async ({ cartaoId, userId }: getCartaoIdProps) => {
   const contaDB = await prisma.cartoes.findFirst({
     where: {
@@ -234,6 +235,7 @@ type novaFatura = {
   dataVencimento: Date;
   userId: number;
 };
+
 export const criaFatura = async ({
   cartaoId,
   dataFechamento,

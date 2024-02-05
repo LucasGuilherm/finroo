@@ -1,6 +1,9 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { fetchApi } from "@/lib/fetchWrap";
+import { useTheme } from "@/providers/themeProvider";
+import { useMutation } from "@tanstack/react-query";
+import { Check } from "lucide-react";
 
 const ColorSelect = () => {
   return (
@@ -8,27 +11,53 @@ const ColorSelect = () => {
       <h2>Tema</h2>
 
       <ul className="flex flex-col gap-2">
-        <ColorChoice color="pink" name="Rosa" />
-        <ColorChoice color="orange" name="Laranja" />
-        <ColorChoice color="green" name="Verde" />
-        <ColorChoice color="sky" name="Verde" />
+        <ColorChoice color="#f4f4f5" name="Cinza" />
+        <ColorChoice color="#fff1f2" name="Rosa" />
+        <ColorChoice color="#fff7ed" name="Laranja" />
+        <ColorChoice color="#f0fdf4" name="Verde" />
+        <ColorChoice color="#f0f9ff" name="Azul" />
       </ul>
     </div>
   );
+};
+
+const postAlterarTema = async (themeColor: string) => {
+  console.log(themeColor);
+
+  await fetchApi("/configuracoes/tema", {
+    method: "POST",
+    body: JSON.stringify({ themeColor }),
+  });
 };
 
 type ColorChoice = {
   color: string;
   name: string;
 };
-
 const ColorChoice = ({ color, name }: ColorChoice) => {
-  console.log(color);
+  const { theme, setTheme } = useTheme();
+
+  const mutation = useMutation({
+    mutationFn: (data: string) => postAlterarTema(data),
+  });
+
+  const clickChangeTheme = () => {
+    setTheme(color);
+    mutation.mutate(color, {
+      onSuccess: () => {
+        console.log("Cor salva com sucesso");
+      },
+    });
+  };
 
   return (
-    <li className="flex flex-row items-center gap-4">
-      <div className={`bg-pink-100 w-10 h-10 border-2 border-${color}-400`} />
-      <span>{color}</span>
+    <li
+      style={{ backgroundColor: color }}
+      className="flex flex-row justify-between items-center gap-4 p-3 rounded border-zinc-400 border-2"
+      onClick={clickChangeTheme}
+    >
+      <span>{name}</span>
+      {theme == color && <Check />}
     </li>
   );
 };

@@ -35,7 +35,7 @@ const ContaInput = ({ onClick, contaSaida }: props) => {
       </h1>
       <div className="flex flex-col gap-4">
         {dados?.map((conta) => {
-          if ("conta" in conta) {
+          if ("nome" in conta) {
             return;
           }
 
@@ -47,7 +47,7 @@ const ContaInput = ({ onClick, contaSaida }: props) => {
             <ItemConta
               key={conta.id}
               id={conta.id}
-              nome={conta.nome}
+              nome={conta.conta}
               onClick={handleInput}
               tipo="despesa"
             />
