@@ -14,9 +14,9 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const session = await getServerSession(authOptions);
-  const themeColor = await getUserTheme({ userId: Number(session?.user.id) });
-
-  console.log(themeColor);
+  const themeColor = await getUserTheme({
+    userId: Number(session?.user.id) || 0,
+  });
 
   return (
     <SessionProvider session={session}>

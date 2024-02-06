@@ -22,8 +22,6 @@ const ColorSelect = () => {
 };
 
 const postAlterarTema = async (themeColor: string) => {
-  console.log(themeColor);
-
   await fetchApi("/configuracoes/tema", {
     method: "POST",
     body: JSON.stringify({ themeColor }),

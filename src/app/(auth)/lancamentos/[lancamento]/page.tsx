@@ -36,8 +36,6 @@ const Lancamento = async ({ params }: { params: LancamentoParams }) => {
 
   const dataLancamento = format(new Date(data), "dd/MM/yyyy");
 
-  console.log(tipo);
-
   return (
     <div className="flex flex-col gap-6 items-center">
       <div

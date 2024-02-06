@@ -20,8 +20,6 @@ const ConfirmacaoExcluir = ({
   const router = useRouter();
 
   const handleClick = async () => {
-    console.log(id);
-
     const excluido = await fetchApi("/lancamentos/excluir", {
       method: "POST",
       body: JSON.stringify({ id }),

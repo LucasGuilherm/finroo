@@ -49,9 +49,6 @@ const PagarFatura = () => {
   };
 
   const [data, setData] = useState(dadosIniciais);
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
 
   const handleNext = (inputs: Partial<PgtoFaturaForm>) => {
     setData((old) => {

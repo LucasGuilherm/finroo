@@ -12,8 +12,6 @@ export const POST = async (request: Request) => {
 
   const data: { id: number } = await request.json();
 
-  console.log(data.id);
-
   const lancamento = await deleteLancamento({ userId, id: data.id });
 
   return NextResponse.json({ lancamento });
